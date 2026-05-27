@@ -272,23 +272,23 @@
   frAocs.forEach(([id, item, correct, note]) => {
     q(`${id}-reverse`, "フランス総まとめ", `${correct}のA.O.C.として適切なものは？`, [item, ...frAocs.filter((row) => row[2] !== correct).slice(0, 3).map((row) => row[1])], 0, note);
     const wrongs = rotateWrongRegions(correct, regionChoicesFr);
-    q(`${id}-pair`, "フランス総まとめ", `A.O.C.と地域の組み合わせで正しいものは？`, [`${item} - ${correct}`, `${item} - ${wrongs[0]}`, `${item} - ${wrongs[1]}`, `${item} - ${wrongs[2]}`], 0, note);
+    q(`${id}-pair`, "フランス総まとめ", `${item}を含むA.O.C.と地域の組み合わせで正しいものは？`, [`${item} - ${correct}`, `${item} - ${wrongs[0]}`, `${item} - ${wrongs[1]}`, `${item} - ${wrongs[2]}`], 0, note);
   });
   frVarieties.forEach(([id, clue, correct, note]) => {
     q(`${id}-reverse`, "フランス総まとめ", `${correct}の特徴として適切なものは？`, [clue, ...frVarieties.filter((row) => row[2] !== correct).slice(0, 3).map((row) => row[1])], 0, note);
     const wrongs = rotateWrongRegions(correct, regionChoicesFr);
-    q(`${id}-pair`, "フランス総まとめ", `品種・ワインタイプと地域の組み合わせで正しいものは？`, [`${clue} - ${correct}`, `${clue} - ${wrongs[0]}`, `${clue} - ${wrongs[1]}`, `${clue} - ${wrongs[2]}`], 0, note);
+    q(`${id}-pair`, "フランス総まとめ", `${clue}について、地域の組み合わせで正しいものは？`, [`${clue} - ${correct}`, `${clue} - ${wrongs[0]}`, `${clue} - ${wrongs[1]}`, `${clue} - ${wrongs[2]}`], 0, note);
   });
 
   itItems.forEach(([id, item, correct, note]) => {
     q(`${id}-reverse`, "イタリア総まとめ", `${correct}州のワインとして適切なものは？`, [item, ...itItems.filter((row) => row[2] !== correct).slice(0, 3).map((row) => row[1])], 0, note);
     const wrongs = rotateWrongRegions(correct, italyChoices);
-    q(`${id}-pair`, "イタリア総まとめ", `ワイン名と州の組み合わせで正しいものは？`, [`${item} - ${correct}`, `${item} - ${wrongs[0]}`, `${item} - ${wrongs[1]}`, `${item} - ${wrongs[2]}`], 0, note);
+    q(`${id}-pair`, "イタリア総まとめ", `${item}について、州の組み合わせで正しいものは？`, [`${item} - ${correct}`, `${item} - ${wrongs[0]}`, `${item} - ${wrongs[1]}`, `${item} - ${wrongs[2]}`], 0, note);
   });
   itVarieties.forEach(([id, variety, clue, correct, note]) => {
     q(`${id}-reverse`, "イタリア総まとめ", `${correct}州の重要品種・ワインとして適切なものは？`, [`${variety} - ${clue}`, ...itVarieties.filter((row) => row[3] !== correct).slice(0, 3).map((row) => `${row[1]} - ${row[2]}`)], 0, note);
     const wrongs = rotateWrongRegions(correct, italyChoices);
-    q(`${id}-pair`, "イタリア総まとめ", `品種と州の組み合わせで正しいものは？`, [`${variety} - ${correct}`, `${variety} - ${wrongs[0]}`, `${variety} - ${wrongs[1]}`, `${variety} - ${wrongs[2]}`], 0, note);
+    q(`${id}-pair`, "イタリア総まとめ", `${variety}について、州の組み合わせで正しいものは？`, [`${variety} - ${correct}`, `${variety} - ${wrongs[0]}`, `${variety} - ${wrongs[1]}`, `${variety} - ${wrongs[2]}`], 0, note);
   });
 
   countrySets.forEach(([prefix, category, pool, items]) => {
@@ -297,7 +297,7 @@
       q(`${prefix}-reverse-${String(index + 1).padStart(3, "0")}`, category, `${answer}と結びつく事項として適切なものは？`, [clue, ...items.filter((row) => row[1] !== answer && !row[3]).slice(0, 3).map((row) => row[0])], 0, note);
       const wrongs = rotateWrongRegions(answer, pool);
       if (wrongs.length >= 3) {
-        q(`${prefix}-pair-${String(index + 1).padStart(3, "0")}`, category, `産地・事項の組み合わせで正しいものは？`, [`${answer} - ${clue}`, `${wrongs[0]} - ${clue}`, `${wrongs[1]} - ${clue}`, `${wrongs[2]} - ${clue}`], 0, note);
+        q(`${prefix}-pair-${String(index + 1).padStart(3, "0")}`, category, `${answer}について、産地・事項の組み合わせで正しいものは？`, [`${answer} - ${clue}`, `${wrongs[0]} - ${clue}`, `${wrongs[1]} - ${clue}`, `${wrongs[2]} - ${clue}`], 0, note);
       }
     });
   });
@@ -320,8 +320,8 @@
     ["mix-010", "Carmenere", "Chile", "Zinfandel", "California"]
   ];
   repeatedDrill.forEach(([id, left, leftHint, right, rightHint]) => {
-    q(id, "地域横断 / 品種判別", `${left} と最も結びつきが強いものは？`, [leftHint, rightHint, "シャンパーニュ主要3品種", "酒精強化ワイン"], 0, `${left} は ${leftHint} と結びつけて整理します。`);
-    q(`${id}-b`, "地域横断 / 品種判別", `${right} と最も結びつきが強いものは？`, [rightHint, leftHint, "貴腐甘口白", "火山性土壌"], 0, `${right} は ${rightHint} と結びつけて整理します。`);
+    q(id, "地域横断 / 品種判別", `${left}を含む品種と産地・特徴の組み合わせで正しいものは？`, [`${left} - ${leftHint}`, `${left} - ${rightHint}`, `${right} - ${leftHint}`, `${right} - シャンパーニュ主要3品種`], 0, `${left} は ${leftHint} と結びつけて整理します。`);
+    q(`${id}-b`, "地域横断 / 品種判別", `${right}を含む品種と産地・特徴の組み合わせで誤っているものは？`, [`${right} - ${leftHint}`, `${right} - ${rightHint}`, `${left} - ${leftHint}`, "Champagne - シャンパーニュ主要3品種"], 0, `${right} は ${rightHint} と結びつけ、${leftHint} は ${left} の整理事項です。`);
   });
 
   window.QUESTION_PACKS.push({

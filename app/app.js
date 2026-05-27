@@ -10,6 +10,7 @@ const categoryLimits = new Map(Object.entries({
   "フランス総まとめ": 40,
   "イタリア総まとめ": 20
 }));
+const totalQuestionLimit = 800;
 const importanceAQuotas = new Map(Object.entries({
   "フランス総まとめ": 20,
   "イタリア総まとめ": 12,
@@ -143,16 +144,23 @@ function collectBuiltInQuestions() {
   const baseQuestions = window.GENERATED_QUESTIONS || [];
   const packQuestions = (window.QUESTION_PACKS || []).flatMap((pack) => pack.questions || []);
   const seen = new Set();
+  const seenQuestionTexts = new Set();
   const categoryCounts = new Map();
+  let acceptedCount = 0;
   const active = [...baseQuestions, ...packQuestions].filter((question) => {
+    if (acceptedCount >= totalQuestionLimit) return false;
     const id = questionId(question);
+    const questionText = String(question.question).replace(/\s+/g, " ").trim();
     if (inactiveQuestionIds.has(id)) return false;
     if (seen.has(id)) return false;
+    if (seenQuestionTexts.has(questionText)) return false;
     const limit = categoryLimits.get(question.category);
     const currentCount = categoryCounts.get(question.category) || 0;
     if (limit && currentCount >= limit) return false;
     seen.add(id);
+    seenQuestionTexts.add(questionText);
     categoryCounts.set(question.category, currentCount + 1);
+    acceptedCount += 1;
     return true;
   });
   const aCounts = new Map();

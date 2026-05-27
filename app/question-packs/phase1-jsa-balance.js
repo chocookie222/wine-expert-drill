@@ -28,10 +28,19 @@
       const row = rows[cursor % rows.length];
       const imp = count < aCount ? "A" : "B";
       const base = `${prefix}-${slug(row[0])}-${Math.floor(cursor / rows.length)}`;
-      add(`${base}-a`, category, `${row[0]}として適切なものは？`, row[1], row[2], row[3], imp);
-      count += 1;
-      if (count >= target) break;
-      add(`${base}-b`, category, `${row[1]}と最も結びつきが強いものは？`, row[0], rows.filter((item) => item[1] !== row[1]).map((item) => item[0]), row[3], imp);
+      const pattern = count % 4;
+      if (pattern === 0) {
+        add(`${base}-basic`, category, `${row[0]}として適切なものは？`, row[1], row[2], row[3], imp);
+      } else if (pattern === 1) {
+        add(`${base}-pair`, category, `${row[0]}について、正しい組み合わせはどれですか？`, `${row[0]} - ${row[1]}`, row[2].map((wrong) => `${row[0]} - ${wrong}`), row[3], imp);
+      } else if (pattern === 2) {
+        const otherRows = rows.filter((item) => item[0] !== row[0]).slice(0, 3);
+        const wrong = otherRows[0] || row;
+        const correctPairs = otherRows.slice(1).map((item) => `${item[0]} - ${item[1]}`);
+        add(`${base}-wrong-pair`, category, `${row[0]}周辺の知識で、誤っている組み合わせはどれですか？`, `${row[0]} - ${wrong[1]}`, [`${row[0]} - ${row[1]}`, ...correctPairs], `${row[0]}は${row[1]}と結びつけます。`, imp);
+      } else {
+        add(`${base}-application`, category, `${row[1]}を判断材料にするとき、最も関係が深い事項は？`, row[0], rows.filter((item) => item[0] !== row[0]).map((item) => item[0]), row[3], imp);
+      }
       count += 1;
       cursor += 1;
     }

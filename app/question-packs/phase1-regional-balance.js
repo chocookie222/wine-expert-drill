@@ -29,19 +29,23 @@
       const fact = facts[cursor % facts.length];
       const base = `${normalize(category)}-${normalize(fact.key)}-${Math.floor(cursor / facts.length)}`;
       const regionChoices = choiceSet(category.split(" / ")[1], wrongRegions);
+      const otherFacts = facts.filter((item) => item.key !== fact.key);
+      const pattern = count % 5;
 
-      if (count < target) {
+      if (pattern === 0) {
         q(`${base}-a`, category, `${fact.key}として適切なものは？`, choiceSet(fact.answer, fact.wrongs), 0, fact.note, fact.importance || "A");
-        count += 1;
-      }
-      if (count < target) {
-        q(`${base}-b`, category, `${fact.answer}と最も関係が深い事項は？`, choiceSet(fact.key, facts.filter((item) => item.key !== fact.key).map((item) => item.key)), 0, fact.note, fact.importance || "A");
-        count += 1;
-      }
-      if (count < target) {
+      } else if (pattern === 1) {
+        q(`${base}-pair`, category, `${fact.key}について、正しい組み合わせはどれですか？`, choiceSet(`${fact.key} - ${fact.answer}`, fact.wrongs.map((wrong) => `${fact.key} - ${wrong}`)), 0, fact.note, fact.importance || "A");
+      } else if (pattern === 2) {
+        const wrongFact = otherFacts[0] || fact;
+        const correctPairs = otherFacts.slice(1).map((item) => `${item.key} - ${item.answer}`);
+        q(`${base}-wrong-pair`, category, `${fact.key}周辺の知識で、誤っている組み合わせはどれですか？`, choiceSet(`${fact.key} - ${wrongFact.answer}`, [`${fact.key} - ${fact.answer}`, ...correctPairs]), 0, `${fact.key}は${fact.answer}と結びつけます。`, fact.importance || "A");
+      } else if (pattern === 3) {
         q(`${base}-c`, category, `${fact.key}が属する地域は？`, regionChoices, 0, fact.note, fact.importance || "A");
-        count += 1;
+      } else {
+        q(`${base}-judge`, category, `${fact.answer}を手がかりに判断する場合、最も関係が深い事項は？`, choiceSet(fact.key, otherFacts.map((item) => item.key)), 0, fact.note, fact.importance || "A");
       }
+      count += 1;
       cursor += 1;
     }
   }
