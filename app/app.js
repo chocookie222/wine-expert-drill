@@ -67,6 +67,10 @@ const categoryDisplayOrder = [
   "アメリカ",
   "オーストラリア"
 ];
+const priorityCategoriesByGroup = {
+  "フランス": ["フランス 歴史・概論", "フランス総まとめ"],
+  "イタリア": ["イタリア 歴史・概論", "イタリア総まとめ"]
+};
 
 const seedQuestions = [
   {
@@ -722,20 +726,23 @@ function renderCategoryFilter() {
   const groupSet = new Set(groups);
   const categories = getCategories().sort(compareCategoryNames);
   const renderedCategories = new Set();
+  const addCategoryOption = (category) => {
+    const label = groupSet.has(category) ? `${category} / 全般` : category;
+    elements.categoryFilter.add(new Option(`${label} (${categoryQuestionCount(category)})`, category));
+    renderedCategories.add(category);
+  };
   groups.forEach((group) => {
     const value = `group:${group}`;
     elements.categoryFilter.add(new Option(`${group} (${categoryQuestionCount(value)})`, value));
+    (priorityCategoriesByGroup[group] || [])
+      .filter((category) => categories.includes(category))
+      .forEach(addCategoryOption);
     categories
       .filter((category) => topCategory(category) === group)
-      .forEach((category) => {
-        const label = groupSet.has(category) ? `${category} / 全般` : category;
-        elements.categoryFilter.add(new Option(`${label} (${categoryQuestionCount(category)})`, category));
-        renderedCategories.add(category);
-      });
+      .forEach(addCategoryOption);
   });
   categories.filter((category) => !renderedCategories.has(category)).forEach((category) => {
-    const label = groupSet.has(category) ? `${category} / 全般` : category;
-    elements.categoryFilter.add(new Option(`${label} (${categoryQuestionCount(category)})`, category));
+    addCategoryOption(category);
   });
   elements.categoryFilter.value = [...elements.categoryFilter.options].some((option) => option.value === selected)
     ? selected
