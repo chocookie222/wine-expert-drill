@@ -32,7 +32,9 @@
       if (pattern === 0) {
         add(`${base}-basic`, category, `${row[0]}として適切なものは？`, row[1], row[2], row[3], imp);
       } else if (pattern === 1) {
-        add(`${base}-pair`, category, `${row[0]}について、正しい組み合わせはどれですか？`, `${row[0]} - ${row[1]}`, row[2].map((wrong) => `${row[0]} - ${wrong}`), row[3], imp);
+        const otherRows = rows.filter((item) => item[0] !== row[0]).slice(0, 3);
+        const wrongPairs = otherRows.map((item, index) => `${item[0]} - ${row[2][index % row[2].length]}`);
+        add(`${base}-pair`, category, `${row[0]}を含む組み合わせで、正しいものはどれですか？`, `${row[0]} - ${row[1]}`, wrongPairs, row[3], imp);
       } else if (pattern === 2) {
         const otherRows = rows.filter((item) => item[0] !== row[0]).slice(0, 3);
         const wrong = otherRows[0] || row;

@@ -62,9 +62,11 @@
   ];
 
   facts.forEach(([id, category, importance, subject, answer, wrongs, note], index) => {
-    add(`${id}-pair`, category, importance, `${subject}について、正しい組み合わせはどれですか？`, wrongChoices(`${subject} - ${answer}`, wrongs.map((wrong) => `${subject} - ${wrong}`)), 0, note);
     const next = facts[(index + 1) % facts.length];
-    add(`${id}-wrong`, category, importance === "A" ? "B" : importance, `${subject}周辺の知識で、誤っている組み合わせはどれですか？`, wrongChoices(`${subject} - ${next[4]}`, [`${subject} - ${answer}`, `${next[3]} - ${next[4]}`, `${facts[(index + 2) % facts.length][3]} - ${facts[(index + 2) % facts.length][4]}`]), 0, `${subject}は${answer}と結びつけます。`);
+    const third = facts[(index + 2) % facts.length];
+    const fourth = facts[(index + 3) % facts.length];
+    add(`${id}-pair`, category, importance, `${subject}を含む組み合わせで、正しいものはどれですか？`, wrongChoices(`${subject} - ${answer}`, [`${next[3]} - ${answer}`, `${third[3]} - ${wrongs[0]}`, `${fourth[3]} - ${wrongs[1] || wrongs[0]}`]), 0, note);
+    add(`${id}-wrong`, category, importance === "A" ? "B" : importance, `${subject}周辺の知識で、誤っている組み合わせはどれですか？`, wrongChoices(`${subject} - ${next[4]}`, [`${subject} - ${answer}`, `${next[3]} - ${next[4]}`, `${third[3]} - ${third[4]}`]), 0, `${subject}は${answer}と結びつけます。`);
     add(`${id}-judge`, category, "B", `${answer}を手がかりに判別する事項として最も適切なものは？`, wrongChoices(subject, facts.filter((item) => item[3] !== subject).map((item) => item[3])), 0, note);
   });
 
