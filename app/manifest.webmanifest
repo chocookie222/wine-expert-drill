@@ -1,0 +1,11 @@
+{
+  "name": "ワインエキスパート対策",
+  "short_name": "ワインエキスパート対策",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#f7f3ea",
+  "theme_color": "#8e2442",
+  "icons": []
+}
