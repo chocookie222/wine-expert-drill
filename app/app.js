@@ -58,6 +58,15 @@ const importanceAQuotas = new Map(Object.entries({
   "イタリア 歴史・概論": 3,
   "地域横断 / 品種判別": 6
 }));
+const categoryDisplayOrder = [
+  "フランス",
+  "イタリア",
+  "スペイン",
+  "ドイツ",
+  "日本",
+  "アメリカ",
+  "オーストラリア"
+];
 
 const seedQuestions = [
   {
@@ -578,12 +587,25 @@ function groupedCategories() {
   return [...topCounts.entries()]
     .filter(([top, count]) => count > 1 || categories.some((category) => category.startsWith(`${top} /`)))
     .map(([top]) => top)
-    .sort((a, b) => a.localeCompare(b, "ja"));
+    .sort(compareCategoryNames);
 }
 
 function categoryQuestionCount(filterValue) {
   if (!filterValue || filterValue === "all") return state.questions.length;
   return state.questions.filter((question) => categoryMatches(question, filterValue)).length;
+}
+
+function compareCategoryNames(a, b) {
+  const topA = topCategory(a);
+  const topB = topCategory(b);
+  const orderA = categoryDisplayOrder.indexOf(topA);
+  const orderB = categoryDisplayOrder.indexOf(topB);
+  if (orderA !== orderB) {
+    if (orderA === -1) return 1;
+    if (orderB === -1) return -1;
+    return orderA - orderB;
+  }
+  return a.localeCompare(b, "ja");
 }
 
 function categoryMatches(question, filterValue) {
@@ -698,11 +720,20 @@ function renderCategoryFilter() {
   elements.categoryFilter.add(allOption);
   const groups = groupedCategories();
   const groupSet = new Set(groups);
+  const categories = getCategories().sort(compareCategoryNames);
+  const renderedCategories = new Set();
   groups.forEach((group) => {
     const value = `group:${group}`;
     elements.categoryFilter.add(new Option(`${group} (${categoryQuestionCount(value)})`, value));
+    categories
+      .filter((category) => topCategory(category) === group)
+      .forEach((category) => {
+        const label = groupSet.has(category) ? `${category} / 全般` : category;
+        elements.categoryFilter.add(new Option(`${label} (${categoryQuestionCount(category)})`, category));
+        renderedCategories.add(category);
+      });
   });
-  getCategories().forEach((category) => {
+  categories.filter((category) => !renderedCategories.has(category)).forEach((category) => {
     const label = groupSet.has(category) ? `${category} / 全般` : category;
     elements.categoryFilter.add(new Option(`${label} (${categoryQuestionCount(category)})`, category));
   });
