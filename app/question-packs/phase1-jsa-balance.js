@@ -41,7 +41,9 @@
         const correctPairs = otherRows.slice(1).map((item) => `${item[0]} - ${item[1]}`);
         add(`${base}-wrong-pair`, category, `${row[0]}周辺の知識で、誤っている組み合わせはどれですか？`, `${row[0]} - ${wrong[1]}`, [`${row[0]} - ${row[1]}`, ...correctPairs], `${row[0]}は${row[1]}と結びつけます。`, imp);
       } else {
-        add(`${base}-application`, category, `${row[1]}を判断材料にするとき、最も関係が深い事項は？`, row[0], rows.filter((item) => item[0] !== row[0]).map((item) => item[0]), row[3], imp);
+        const otherRows = rows.filter((item) => item[0] !== row[0]).slice(0, 3);
+        const wrongPairs = otherRows.map((item, index) => `${item[0]} - ${row[2][index % row[2].length]}`);
+        add(`${base}-application`, category, `${category}について、正しい組み合わせはどれですか？`, `${row[0]} - ${row[1]}`, wrongPairs, row[3], imp);
       }
       count += 1;
       cursor += 1;

@@ -4,7 +4,10 @@ const inactiveQuestionIds = new Set([
   "jsa-pt-001",
   "jsa-nz-001",
   "jsa-cl-001",
-  "jsa-general-010"
+  "jsa-general-010",
+  "ocr-bordeaux-001",
+  "phase1-balance-フランス-ボルドー-左岸で主体となりやすい黒ブドウ品種-0-a",
+  "jsa-fr-001"
 ]);
 const categoryLimits = new Map(Object.entries({
   "フランス総まとめ": 40,
@@ -154,6 +157,16 @@ function collectBuiltInQuestions() {
     if (inactiveQuestionIds.has(id)) return false;
     if (seen.has(id)) return false;
     if (seenQuestionTexts.has(questionText)) return false;
+    if (questionText.includes("左岸で主体となりやすい")) return false;
+    if (questionText.includes("品種が属する地域")) return false;
+    if (questionText.includes("Sauternesを含む組み合わせ")) return false;
+    if (questionText.includes("ボルドー甘口白で中心となる品種とスタイル") && questionText.includes("組み合わせ")) return false;
+    if (questionText.includes("手がかり")) return false;
+    if (questionText.includes("判断する場合")) return false;
+    if (questionText.includes("判別する事項")) return false;
+    if (questionText.includes("正しく結びつく事項")) return false;
+    if (questionText.includes("最も関係が深い事項")) return false;
+    if (questionText.includes("重要なワインタイプ")) return false;
     if (!isUsefulExamQuestion(question)) return false;
     const limit = categoryLimits.get(question.category);
     const currentCount = categoryCounts.get(question.category) || 0;
@@ -278,6 +291,16 @@ const displayNames = new Map(Object.entries({
   "Carbonic Maceration": "Carbonic Maceration（マセラシオン・カルボニック）"
 }));
 const choiceFacts = new Map(Object.entries({
+  "Medoc": "ボルドー左岸の地区で、Pauillac、Margaux、Saint-Estephe などの村名A.O.C.が位置します",
+  "Pauillac": "ボルドー左岸メドック地区の村名A.O.C.",
+  "Margaux": "ボルドー左岸メドック地区の村名A.O.C.",
+  "Saint-Estephe": "ボルドー左岸メドック地区の村名A.O.C.",
+  "Pauillac、Margaux、Saint-Estephe が位置する地区": "Medoc 地区を指します",
+  "右岸で主体となりやすい黒ブドウ品種": "ボルドー右岸では Merlot が主体になりやすいです",
+  "メドック、グラーヴで主体となりやすい黒ブドウ品種": "Cabernet Sauvignon が主体になりやすいです",
+  "Sauternes": "ボルドーのA.O.C.で、Semillon主体の貴腐甘口白で重要です",
+  "Entre-Deux-Mers": "ボルドーの白ワイン産地として整理します",
+  "Jurancon": "南西地方の白、特に甘口で重要なA.O.C.",
   "Cabernet Sauvignon": "ボルドー左岸やナパ・ヴァレーなどで重要な黒ブドウ品種",
   "Merlot": "ボルドー右岸で重要な黒ブドウ品種",
   "Gamay": "ボージョレで重要な黒ブドウ品種",
@@ -405,6 +428,13 @@ const choiceFacts = new Map(Object.entries({
   "Rueda": "スペインで Verdejo と結びつきやすい白ワイン産地",
   "Jerez": "シェリーで重要なスペイン南部の産地",
   "Rias Baixas": "Albarino と結びつきやすいスペイン北西部の産地",
+  "砂利質土壌": "主にボルドー左岸のメドックやグラーヴで多く見られ、Cabernet Sauvignonと結びつけます",
+  "粘土質・石灰質土壌": "主にボルドー右岸のサンテミリオンやポムロールで意識し、Merlotと結びつけます",
+  "キンメリジャン石灰質": "主にシャブリで重要な石灰質土壌で、Chardonnayと結びつけます",
+  "花崗岩質土壌": "北部ローヌなどで見られる土壌で、Syrahと結びつけて整理します",
+  "火山性土壌": "EtnaやSantoriniなどで多く見られる土壌です",
+  "スレート土壌": "PrioratやMoselなどで重要な土壌です",
+  "粘土石灰質": "ボルドー右岸や一部の石灰質産地で見られる土壌表現です",
   "Chardonnay 主体の甘口白": "ブルゴーニュの基本的な赤ワインタイプではありません",
   "Pinot Noir 主体の赤": "ブルゴーニュ、とくにコート・ド・ニュイで重要な赤ワインタイプ",
   "Gamay 主体の赤": "ボージョレで重要な赤ワインタイプ",
@@ -434,11 +464,11 @@ const choiceFacts = new Map(Object.entries({
   "甘口ワインの糖度等級": "ドイツなどの糖度分類で問われる内容",
   "瓶内二次発酵の方式": "スパークリングワインの製法で問われる内容",
   "熟成期間表示": "スペインなどの熟成表示で問われる内容",
-  "V.D.N.": "南仏の酒精強化甘口ワインで重要なワインタイプ",
+  "V.D.N.": "南仏の酒精強化甘口ワイン",
   "瓶内二次発酵の白": "スパークリングワインの製法・タイプに関する表現",
   "貴腐甘口白": "ソーテルヌなどで重要な甘口白ワインのタイプ",
   "辛口シェリー": "ヘレスで重要な酒精強化ワインのタイプ",
-  "ロゼ": "プロヴァンスで特に重要なワインタイプ",
+  "ロゼ": "プロヴァンスで特に押さえたいワイン",
   "酒精強化赤": "ポートや一部V.D.N.で問われるワインタイプ",
   "酸化熟成白": "シェリーなどで問われる熟成タイプ",
   "日本ワイン": "国内収穫ブドウのみを国内で醸造したワイン",
@@ -501,6 +531,24 @@ const choiceFacts = new Map(Object.entries({
   "ラベル色だけを覚える": "制度や産地理解にはつながりにくい学習視点",
   "ボトル重量だけを比較する": "原産地呼称や品種の理解とは関係が薄い視点"
 }));
+const pairChoiceFacts = new Map(Object.entries({
+  "Pauillac、Margaux、Saint-Estephe が位置する地区 - Medoc": "Pauillac、Margaux、Saint-Estephe は、いずれもボルドー左岸のMedoc地区に位置する村名A.O.C.です。",
+  "Pauillac、Margaux、Saint-Estephe が位置する地区 - Cabernet Sauvignon": "Pauillac、Margaux、Saint-Estephe が位置する地区はMedocです。Cabernet Sauvignonはメドックなど左岸で重要な品種ですが、地区名ではありません。",
+  "Pauillac、Margaux、Saint-Estephe が位置する地区 - Syrah": "Pauillac、Margaux、Saint-Estephe はMedoc地区です。Syrahは北部ローヌの主要黒ブドウ品種です。",
+  "Semillon主体の貴腐甘口白": "ボルドー甘口白ではSemillon主体の貴腐甘口白を整理します。",
+  "ボルドー甘口白 - Semillon主体の貴腐甘口白": "ボルドー甘口白ではSemillon主体の貴腐甘口白を整理します。",
+  "右岸で主体となりやすい黒ブドウ品種 - Merlot": "ボルドー右岸ではMerlotが主体になりやすく、Saint-EmilionやPomerolと結びつきます。",
+  "メドック、グラーヴで主体となりやすい黒ブドウ品種 - Cabernet Sauvignon": "メドック、グラーヴではCabernet Sauvignonが主体になりやすく、砂利質土壌と結びつけます。"
+}));
+const soilFacts = [
+  ["砂利質土壌", "主にボルドー左岸のメドックやグラーヴで多く見られ、Cabernet Sauvignonと結びつけます"],
+  ["粘土質・石灰質土壌", "主にボルドー右岸のサンテミリオンやポムロールで意識し、Merlotと結びつけます"],
+  ["キンメリジャン石灰質", "主にシャブリで重要な石灰質土壌で、Chardonnayと結びつけます"],
+  ["花崗岩質土壌", "北部ローヌなどで見られる土壌で、Syrahと結びつけて整理します"],
+  ["火山性土壌", "EtnaやSantoriniなどで多く見られる土壌です"],
+  ["スレート土壌", "PrioratやMoselなどで重要な土壌です"],
+  ["粘土石灰質", "ボルドー右岸や一部の石灰質産地で見られる土壌表現です"]
+];
 
 const state = loadState();
 let currentQuestion = null;
@@ -592,6 +640,9 @@ function isUsefulExamQuestion(question) {
     if (rightParts.length >= 4 && new Set(rightParts).size <= 2) return false;
   }
   if (text.includes("と結びつく事項として適切なもの")) return false;
+  if (text.includes("正しく結びつく事項")) return false;
+  if (text.includes("判別する事項")) return false;
+  if (text.includes("最も関係が深い事項")) return false;
   if (text.includes("と最も結びつきが強いもの")) return false;
   if (text.includes("説明として最も適切なもの") && choices.every((choice) => String(choice).length > 24)) return false;
   return true;
@@ -728,11 +779,18 @@ function choiceLabel(index) {
 }
 
 function choiceExplanation(question, index) {
-  if (Array.isArray(question.choiceNotes) && question.choiceNotes[index]) {
-    return question.choiceNotes[index];
+  const rawChoice = question.choices[index];
+  const exactPairFact = pairChoiceFacts.get(String(rawChoice));
+  if (exactPairFact) return exactPairFact;
+
+  const savedNote = Array.isArray(question.choiceNotes) ? question.choiceNotes[index] : "";
+  if (savedNote && !isGenericExplanation(savedNote)) {
+    return savedNote;
   }
 
-  const rawChoice = question.choices[index];
+  const detailed = detailedChoiceExplanation(rawChoice);
+  if (detailed) return detailed;
+
   const choice = displayText(rawChoice);
   if (index === question.answer) return question.note;
 
@@ -740,6 +798,38 @@ function choiceExplanation(question, index) {
   if (fact) return `${choice}は${fact}です。`;
 
   return `${choice}はこの設問の条件とは別の事項です。`;
+}
+
+function isGenericExplanation(note) {
+  return /別の(産地・品種・制度|重要事項)/.test(String(note));
+}
+
+function detailedChoiceExplanation(rawChoice) {
+  const choice = String(rawChoice);
+  const pairFact = pairChoiceFacts.get(choice);
+  if (pairFact) return pairFact;
+
+  if (choice.includes(" - ")) {
+    const [left, right] = choice.split(" - ").map((part) => part.trim());
+    const leftFact = choiceFacts.get(left);
+    const rightFact = choiceFacts.get(right);
+    const soilFact = soilExplanationFor(left);
+    if (leftFact && rightFact) return `${left}は${leftFact}。${right}は${rightFact}。`;
+    if (soilFact && rightFact) return `${soilFact}。${right}は${rightFact}。`;
+    if (soilFact) return `${soilFact}。`;
+    if (leftFact) return `${left}は${leftFact}。`;
+    if (rightFact) return `${right}は${rightFact}。`;
+  }
+
+  const soilFact = soilExplanationFor(choice);
+  if (soilFact) return `${soilFact}。`;
+
+  return "";
+}
+
+function soilExplanationFor(text) {
+  const match = soilFacts.find(([soil]) => text.includes(soil));
+  return match ? `${match[0]}は${match[1]}` : "";
 }
 
 function renderCategoryFilter() {

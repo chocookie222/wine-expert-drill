@@ -22,7 +22,7 @@
   const facts = [
     ["fr-bdx-left", "フランス / ボルドー", "A", "ボルドー左岸", "Cabernet Sauvignon", ["Merlot", "Pinot Noir", "Gamay"], "ボルドー左岸はCabernet Sauvignon主体になりやすく、メドックやグラーヴと結びつけます。"],
     ["fr-bdx-right", "フランス / ボルドー", "A", "ボルドー右岸", "Merlot", ["Cabernet Sauvignon", "Syrah", "Nebbiolo"], "ボルドー右岸はMerlot主体になりやすく、Saint-EmilionやPomerolが重要です。"],
-    ["fr-sauternes", "フランス総まとめ", "A", "Sauternes", "ボルドーの貴腐甘口白", ["ロワールの辛口白", "ローヌの赤", "ブルゴーニュの発泡性ワイン"], "Sauternesはボルドーの貴腐甘口白で、Semillonを軸に整理します。"],
+    ["fr-sauternes", "フランス総まとめ", "A", "ボルドー甘口白", "Semillon主体の貴腐甘口白", ["Cabernet Sauvignon主体の辛口赤", "Chardonnay主体の瓶内二次発酵", "Grenache主体のロゼ"], "ボルドー甘口白はSemillon主体の貴腐甘口白を軸に整理します。"],
     ["fr-chablis", "フランス / ブルゴーニュ", "A", "Chablis", "Chardonnayと石灰質土壌", ["Pinot Noirと花崗岩", "Sauvignon Blancと火山性土壌", "Gamayと砂利質土壌"], "ChablisはChardonnayとキンメリジャン系石灰質土壌が重要です。"],
     ["fr-sancerre", "フランス / ロワール", "A", "Sancerre", "Sauvignon Blanc", ["Chenin Blanc", "Melon de Bourgogne", "Viognier"], "Sancerreはロワール上流のSauvignon Blancで重要です。"],
     ["fr-vouvray", "フランス / ロワール", "A", "Vouvray", "Chenin Blanc", ["Sauvignon Blanc", "Chardonnay", "Semillon"], "VouvrayはChenin Blancの白、甘口、発泡で整理します。"],
@@ -60,14 +60,76 @@
     ["gen-cava", "ワイン概論 / 重要A", "A", "Cava", "瓶内二次発酵", ["シャルマ方式のみ", "酒精強化", "酸化熟成のみ"], "Cavaはスペインの瓶内二次発酵による発泡性ワインです。"],
     ["gen-priorat", "ワイン概論 / 土壌", "B", "Priorat", "Llicorella", ["Kimmeridgian", "Terra rossa", "Galestro"], "PrioratではLlicorellaと呼ばれるスレート系土壌が重要です。"]
   ];
+  const customPairQuestions = {
+    "fr-bdx-left": {
+      question: "ボルドー左岸について、土壌傾向と主要品種の組み合わせで最も適切なものはどれですか？",
+      choices: [
+        "砂利質土壌 - Cabernet Sauvignon",
+        "粘土質・石灰質土壌 - Merlot",
+        "キンメリジャン石灰質 - Chardonnay",
+        "花崗岩質土壌 - Syrah"
+      ]
+    },
+    "fr-bdx-right": {
+      question: "ボルドー右岸について、土壌傾向と主要品種の組み合わせで最も適切なものはどれですか？",
+      choices: [
+        "粘土質・石灰質土壌 - Merlot",
+        "砂利質土壌 - Cabernet Sauvignon",
+        "キンメリジャン石灰質 - Chardonnay",
+        "花崗岩質土壌 - Syrah"
+      ]
+    }
+  };
+  const customWrongQuestions = {
+    "fr-bdx-left": {
+      question: "ボルドー左岸・右岸の土壌傾向と主要品種の組み合わせで、誤っているものはどれですか？",
+      choices: [
+        "砂利質土壌 - Merlot",
+        "砂利質土壌 - Cabernet Sauvignon",
+        "粘土質・石灰質土壌 - Merlot",
+        "キンメリジャン石灰質 - Chardonnay"
+      ],
+      note: "ボルドー左岸は砂利質土壌とCabernet Sauvignon、右岸は粘土質・石灰質土壌とMerlotを軸に判別します。"
+    },
+    "fr-bdx-right": {
+      question: "ボルドー左岸・右岸の土壌傾向と主要品種の組み合わせで、誤っているものはどれですか？",
+      choices: [
+        "粘土質・石灰質土壌 - Cabernet Sauvignon",
+        "粘土質・石灰質土壌 - Merlot",
+        "砂利質土壌 - Cabernet Sauvignon",
+        "キンメリジャン石灰質 - Chardonnay"
+      ],
+      note: "ボルドー右岸は粘土質・石灰質土壌とMerlot、左岸は砂利質土壌とCabernet Sauvignonを軸に判別します。"
+    }
+  };
+
+  add(
+    "fr-bdx-medoc-graves-region",
+    "フランス / ボルドー",
+    "A",
+    "メドック、グラーヴが位置するフランスの主要ワイン産地はどれですか？",
+    ["ボルドー", "ブルゴーニュ", "シャンパーニュ", "ロワール"],
+    0,
+    "メドック、グラーヴはボルドー左岸に位置する重要地区です。"
+  );
 
   facts.forEach(([id, category, importance, subject, answer, wrongs, note], index) => {
     const next = facts[(index + 1) % facts.length];
     const third = facts[(index + 2) % facts.length];
     const fourth = facts[(index + 3) % facts.length];
-    add(`${id}-pair`, category, importance, `${subject}を含む組み合わせで、正しいものはどれですか？`, wrongChoices(`${subject} - ${answer}`, [`${next[3]} - ${answer}`, `${third[3]} - ${wrongs[0]}`, `${fourth[3]} - ${wrongs[1] || wrongs[0]}`]), 0, note);
-    add(`${id}-wrong`, category, importance === "A" ? "B" : importance, `${subject}周辺の知識で、誤っている組み合わせはどれですか？`, wrongChoices(`${subject} - ${next[4]}`, [`${subject} - ${answer}`, `${next[3]} - ${next[4]}`, `${third[3]} - ${third[4]}`]), 0, `${subject}は${answer}と結びつけます。`);
-    add(`${id}-judge`, category, "B", `${answer}を手がかりに判別する事項として最も適切なものは？`, wrongChoices(subject, facts.filter((item) => item[3] !== subject).map((item) => item[3])), 0, note);
+    const customPair = customPairQuestions[id];
+    if (customPair) {
+      add(`${id}-pair`, category, importance, customPair.question, customPair.choices, 0, note);
+    } else {
+      add(`${id}-pair`, category, importance, `${subject}を含む組み合わせで、正しいものはどれですか？`, wrongChoices(`${subject} - ${answer}`, [`${next[3]} - ${answer}`, `${third[3]} - ${wrongs[0]}`, `${fourth[3]} - ${wrongs[1] || wrongs[0]}`]), 0, note);
+    }
+    const customWrong = customWrongQuestions[id];
+    if (customWrong) {
+      add(`${id}-wrong`, category, importance === "A" ? "B" : importance, customWrong.question, customWrong.choices, 0, customWrong.note);
+    } else {
+      add(`${id}-wrong`, category, importance === "A" ? "B" : importance, `${subject}周辺の知識で、誤っている組み合わせはどれですか？`, wrongChoices(`${subject} - ${next[4]}`, [`${subject} - ${answer}`, `${next[3]} - ${next[4]}`, `${third[3]} - ${third[4]}`]), 0, `${subject}は${answer}と結びつけます。`);
+    }
+    add(`${id}-compare`, category, "B", `次の組み合わせで正しいものはどれですか？`, wrongChoices(`${subject} - ${answer}`, [`${next[3]} - ${answer}`, `${third[3]} - ${wrongs[0]}`, `${fourth[3]} - ${wrongs[1] || wrongs[0]}`]), 0, note);
   });
 
   window.QUESTION_PACKS.push({

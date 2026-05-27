@@ -42,9 +42,13 @@
         const correctPairs = otherFacts.slice(1).map((item) => `${item.key} - ${item.answer}`);
         q(`${base}-wrong-pair`, category, `${fact.key}周辺の知識で、誤っている組み合わせはどれですか？`, choiceSet(`${fact.key} - ${wrongFact.answer}`, [`${fact.key} - ${fact.answer}`, ...correctPairs]), 0, `${fact.key}は${fact.answer}と結びつけます。`, fact.importance || "A");
       } else if (pattern === 3) {
-        q(`${base}-c`, category, `${fact.key}が属する地域は？`, regionChoices, 0, fact.note, fact.importance || "A");
+        q(`${base}-c`, category, `${category.split(" / ")[1]}で、${fact.key}はどれですか？`, choiceSet(fact.answer, fact.wrongs), 0, fact.note, fact.importance || "A");
       } else {
-        q(`${base}-judge`, category, `${fact.answer}を手がかりに判断する場合、最も関係が深い事項は？`, choiceSet(fact.key, otherFacts.map((item) => item.key)), 0, fact.note, fact.importance || "A");
+        const explanationChoices = choiceSet(
+          `${fact.key} - ${fact.answer}`,
+          otherFacts.slice(0, 3).map((item, index) => `${item.key} - ${fact.wrongs[index % fact.wrongs.length]}`)
+        );
+        q(`${base}-compare`, category, `${category.split(" / ")[1]}について、正しい組み合わせはどれですか？`, explanationChoices, 0, fact.note, fact.importance || "A");
       }
       count += 1;
       cursor += 1;
@@ -56,10 +60,10 @@
 
   const data = [
     ["フランス / ボルドー", franceRegions, 12, [
-      ["左岸で主体となりやすい黒ブドウ品種", "Cabernet Sauvignon", ["Merlot", "Pinot Noir", "Gamay"], "ボルドー左岸では Cabernet Sauvignon が主体になりやすく、メドックやグラーヴと結びつけます。"],
+      ["メドック、グラーヴで主体となりやすい黒ブドウ品種", "Cabernet Sauvignon", ["Merlot", "Pinot Noir", "Gamay"], "メドック、グラーヴでは Cabernet Sauvignon が主体になりやすく、砂利質土壌と結びつけます。"],
       ["右岸で主体となりやすい黒ブドウ品種", "Merlot", ["Cabernet Sauvignon", "Syrah", "Nebbiolo"], "ボルドー右岸では Merlot が主体になりやすく、Saint-Emilion や Pomerol と結びつけます。"],
-      ["Pauillac、Margaux、Saint-Estephe が位置する地区", "Medoc", ["Sauternes", "Entre-Deux-Mers", "Jurancon"], "Pauillac、Margaux、Saint-Estephe はメドック地区の村名A.O.C.です。"],
-      ["Sauternesで重要なワインタイプ", "貴腐甘口白", ["辛口赤", "瓶内二次発酵の白", "ロゼ"], "Sauternes は Semillon を主体とする貴腐甘口白で重要です。"]
+      ["Pauillac、Margaux、Saint-Estephe が位置する地区", "Medoc", ["Entre-Deux-Mers", "Graves", "Pomerol"], "Pauillac、Margaux、Saint-Estephe はメドック地区の村名A.O.C.です。"],
+      ["ボルドー甘口白で中心となる品種とスタイル", "Semillon主体の貴腐甘口白", ["Cabernet Sauvignon主体の辛口赤", "Chardonnay主体の瓶内二次発酵", "Grenache主体のロゼ"], "ボルドーの甘口白では Semillon を主体とする貴腐甘口白を整理します。"]
     ]],
     ["フランス / ブルゴーニュ", franceRegions, 11, [
       ["赤ワインの基本品種", "Pinot Noir", ["Cabernet Sauvignon", "Syrah", "Tempranillo"], "ブルゴーニュの赤は基本的に Pinot Noir と整理します。"],
@@ -101,7 +105,7 @@
       ["ジュラ・サヴォワの地理的特徴", "山地性・冷涼地域", ["熱帯性地域", "砂漠性地域", "平坦な灌漑専用地域"], "ジュラ・サヴォワは山地性・冷涼地域として整理します。"]
     ]],
     ["フランス / プロヴァンス", franceRegions, 14, [
-      ["プロヴァンスで特に重要なワインタイプ", "ロゼ", ["貴腐甘口白", "酸化熟成白", "瓶内二次発酵の白"], "プロヴァンスはロゼワインの産地として重要です。"],
+      ["プロヴァンスで生産比率が高いワイン", "ロゼ", ["貴腐甘口白", "酸化熟成白", "瓶内二次発酵の白"], "プロヴァンスはロゼワインの産地として重要です。"],
       ["Bandolで重要な黒ブドウ品種", "Mourvedre", ["Gamay", "Nebbiolo", "Tannat"], "Bandol は Mourvedre 主体の赤・ロゼで重要です。"],
       ["プロヴァンスの気候", "地中海性気候", ["海洋性気候", "大陸性気候", "冷涼な山岳気候のみ"], "プロヴァンスは地中海性気候とロゼを結びつけます。"],
       ["Cotes de Provenceで中心となる理解", "ロゼの広域産地", ["貴腐甘口白", "酒精強化赤のみ", "シャンパーニュ方式のみ"], "Cotes de Provence はロゼの広域産地として重要です。"]
@@ -115,7 +119,7 @@
     ["フランス / 南西地方", franceRegions, 14, [
       ["Cahorsの主要品種", "Malbec", ["Merlot", "Pinot Noir", "Gamay"], "Cahors は Malbec の赤で重要です。"],
       ["Madiranの主要品種", "Tannat", ["Syrah", "Nebbiolo", "Grenache"], "Madiran は Tannat の赤で重要です。"],
-      ["Juranconの重要なワインタイプ", "白・甘口", ["ロゼのみ", "酒精強化赤のみ", "瓶内二次発酵のみ"], "Jurancon は白、特に甘口の理解が重要です。"],
+      ["Juranconで押さえるべきスタイル", "白・甘口", ["ロゼのみ", "酒精強化赤のみ", "瓶内二次発酵のみ"], "Jurancon は白、特に甘口の理解が重要です。"],
       ["南西地方の学習で重要な視点", "地方品種とA.O.C.の対応", ["シャンパーニュ主要3品種だけ", "ブルゴーニュ畑名だけ", "スペイン熟成表示だけ"], "南西地方は地方品種とA.O.C.の対応関係で得点しやすい地域です。"]
     ]],
     ["イタリア / ピエモンテ", italyRegions, 13, [
@@ -157,7 +161,7 @@
     ]],
     ["イタリア / マルケ", italyRegions, 14, [
       ["Verdicchio dei Castelli di Jesiの品種", "Verdicchio", ["Garganega", "Fiano", "Greco"], "Verdicchio dei Castelli di Jesi はマルケ州の白です。"],
-      ["マルケで重要なワインタイプ", "白ワイン", ["酒精強化赤", "瓶内二次発酵のみ", "貴腐甘口のみ"], "マルケは Verdicchio の白で重要です。"],
+      ["マルケでVerdicchioと結びつくスタイル", "白ワイン", ["酒精強化赤", "瓶内二次発酵のみ", "貴腐甘口のみ"], "マルケは Verdicchio の白で重要です。"],
       ["Coneroで重要な品種", "Montepulciano", ["Nebbiolo", "Glera", "Corvina"], "Conero は Montepulciano を用いる赤で整理します。"],
       ["マルケの位置", "中部イタリアのアドリア海側", ["北西部の山岳地域", "地中海の島", "南部のかかと部分"], "マルケは中部イタリアのアドリア海側に位置します。"]
     ]],
