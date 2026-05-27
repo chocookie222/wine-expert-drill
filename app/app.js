@@ -1,4 +1,63 @@
 const STORAGE_KEY = "wineExpertDrill.v1";
+const inactiveQuestionIds = new Set([
+  "jsa-gr-001",
+  "jsa-pt-001",
+  "jsa-nz-001",
+  "jsa-cl-001",
+  "jsa-general-010"
+]);
+const categoryLimits = new Map(Object.entries({
+  "フランス総まとめ": 40,
+  "イタリア総まとめ": 20
+}));
+const importanceAQuotas = new Map(Object.entries({
+  "フランス総まとめ": 20,
+  "イタリア総まとめ": 12,
+  "フランス / ボルドー": 4,
+  "フランス / ブルゴーニュ": 4,
+  "フランス / シャンパーニュ": 4,
+  "フランス / ロワール": 4,
+  "フランス / ローヌ": 4,
+  "フランス / アルザス": 3,
+  "フランス / ジュラ・サヴォワ": 3,
+  "フランス / プロヴァンス": 3,
+  "フランス / ラングドック・ルーション": 3,
+  "フランス / 南西地方": 3,
+  "イタリア / ピエモンテ": 4,
+  "イタリア / トスカーナ": 4,
+  "イタリア / ヴェネト": 4,
+  "イタリア / ロンバルディア": 3,
+  "イタリア / トレンティーノ・アルト・アディジェ": 3,
+  "イタリア / フリウリ・ヴェネツィア・ジューリア": 3,
+  "イタリア / マルケ": 3,
+  "イタリア / アブルッツォ": 3,
+  "イタリア / カンパーニア": 3,
+  "イタリア / プーリア": 3,
+  "イタリア / シチリア": 3,
+  "イタリア / サルデーニャ": 2,
+  "日本": 18,
+  "ドイツ": 18,
+  "スペイン": 18,
+  "スペイン / 主要産地": 8,
+  "スペイン / 法律": 4,
+  "アメリカ": 16,
+  "アメリカ / カリフォルニア": 6,
+  "アメリカ / オレゴン": 3,
+  "アメリカ / ワシントン": 3,
+  "アメリカ / ニューヨーク": 3,
+  "オーストラリア": 10,
+  "ワイン概論 / 重要A": 18,
+  "ワイン概論 / 気候": 5,
+  "ワイン概論 / 醸造": 6,
+  "ワイン概論 / 土壌": 5,
+  "ワイン概論 / スパークリング": 3,
+  "ワイン概論 / 栽培": 4,
+  "ワイン概論 / 歴史": 3,
+  "法律・格付け": 6,
+  "フランス 歴史・概論": 4,
+  "イタリア 歴史・概論": 3,
+  "地域横断 / 品種判別": 6
+}));
 
 const seedQuestions = [
   {
@@ -71,11 +130,26 @@ function collectBuiltInQuestions() {
   const baseQuestions = window.GENERATED_QUESTIONS || [];
   const packQuestions = (window.QUESTION_PACKS || []).flatMap((pack) => pack.questions || []);
   const seen = new Set();
-  return [...baseQuestions, ...packQuestions].filter((question) => {
+  const categoryCounts = new Map();
+  const active = [...baseQuestions, ...packQuestions].filter((question) => {
     const id = questionId(question);
+    if (inactiveQuestionIds.has(id)) return false;
     if (seen.has(id)) return false;
+    const limit = categoryLimits.get(question.category);
+    const currentCount = categoryCounts.get(question.category) || 0;
+    if (limit && currentCount >= limit) return false;
     seen.add(id);
+    categoryCounts.set(question.category, currentCount + 1);
     return true;
+  });
+  const aCounts = new Map();
+  return active.map((question) => {
+    const quota = importanceAQuotas.get(question.category);
+    if ((question.importance || "B") !== "A" || !quota) return question;
+    const used = aCounts.get(question.category) || 0;
+    aCounts.set(question.category, used + 1);
+    if (used < quota) return question;
+    return { ...question, importance: "B" };
   });
 }
 
@@ -507,6 +581,11 @@ function groupedCategories() {
     .sort((a, b) => a.localeCompare(b, "ja"));
 }
 
+function categoryQuestionCount(filterValue) {
+  if (!filterValue || filterValue === "all") return state.questions.length;
+  return state.questions.filter((question) => categoryMatches(question, filterValue)).length;
+}
+
 function categoryMatches(question, filterValue) {
   if (!filterValue || filterValue === "all") return true;
   if (filterValue.startsWith("group:")) {
@@ -615,16 +694,17 @@ function choiceExplanation(question, index) {
 function renderCategoryFilter() {
   const selected = elements.categoryFilter.value || "all";
   elements.categoryFilter.innerHTML = "";
-  const allOption = new Option("すべて", "all");
+  const allOption = new Option(`すべて (${categoryQuestionCount("all")})`, "all");
   elements.categoryFilter.add(allOption);
   const groups = groupedCategories();
   const groupSet = new Set(groups);
   groups.forEach((group) => {
-    elements.categoryFilter.add(new Option(group, `group:${group}`));
+    const value = `group:${group}`;
+    elements.categoryFilter.add(new Option(`${group} (${categoryQuestionCount(value)})`, value));
   });
   getCategories().forEach((category) => {
     const label = groupSet.has(category) ? `${category} / 全般` : category;
-    elements.categoryFilter.add(new Option(label, category));
+    elements.categoryFilter.add(new Option(`${label} (${categoryQuestionCount(category)})`, category));
   });
   elements.categoryFilter.value = [...elements.categoryFilter.options].some((option) => option.value === selected)
     ? selected
