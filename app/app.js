@@ -780,6 +780,22 @@ function displayText(text) {
   return formatted;
 }
 
+function explanationText(text) {
+  return displayText(text)
+    .replace(/と結びつけて整理します/g, "と結びつきます")
+    .replace(/と結びつけて整理する/g, "と結びつく")
+    .replace(/と結びつけて/g, "と結びつけて")
+    .replace(/を軸に整理します/g, "が重要です")
+    .replace(/を中心に整理します/g, "が中心です")
+    .replace(/中心に整理します/g, "中心です")
+    .replace(/あわせて整理します/g, "あわせて重要です")
+    .replace(/合わせて整理します/g, "あわせて重要です")
+    .replace(/として整理します/g, "です")
+    .replace(/で整理します/g, "で重要です")
+    .replace(/を整理します/g, "が重要です")
+    .replace(/整理します/g, "重要です");
+}
+
 function choiceLabel(index) {
   return ["A", "B", "C", "D"][index] || String(index + 1);
 }
@@ -964,7 +980,7 @@ function renderChoiceNotes(selectedIndex) {
     }
 
     const explanation = document.createElement("p");
-    explanation.textContent = displayText(choiceExplanation(currentQuestion, originalIndex));
+    explanation.textContent = explanationText(choiceExplanation(currentQuestion, originalIndex));
 
     item.append(title, status, explanation);
     elements.choiceNotes.append(item);
