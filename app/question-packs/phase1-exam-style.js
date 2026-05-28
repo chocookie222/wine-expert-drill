@@ -599,15 +599,15 @@
     {
       id: "champagne-production-order",
       importance: "A",
-      question: "シャンパーニュの製造工程として、順序が最も自然なものはどれですか？",
-      choices: ["Pressurage → Fermentation alcoolique → Assemblage → Tirage → Remuage → Dégorgement", "Dosage → Pressurage → Remuage → Fermentation alcoolique → Tirage → Assemblage", "Assemblage → Pressurage → Dégorgement → Tirage → Remuage → Dosage", "Remuage → Vendange → Pressurage → Dégorgement → Tirage → Dosage"],
+      question: "シャンパーニュの製造工程として、最初から最後の順序で最も適切なものはどれですか？",
+      choices: ["Pressurage → Tirage → Deuxième Fermentation en Bouteille → Bouchage", "Dosage → Pressurage → Fermentation Malolactique → Remuage", "Assemblage → Fermentation Alcoolique → Dosage → Remuage", "Pressurage → Fermentation Alcoolique → Bouchage → Dégorgement"],
       answer: 0,
-      note: "圧搾、一次発酵、アッサンブラージュ、ティラージュ、動瓶、澱抜きの流れが基本です。",
+      note: "圧搾後、瓶内二次発酵の準備であるTirageへ進み、瓶内二次発酵を経て打栓します。",
       notes: [
-        "正解です。圧搾、一次発酵、アッサンブラージュ、ティラージュ、動瓶、澱抜きの流れが基本です。",
-        "Dosageは澱抜き後の甘味調整で、最初には行いません。",
-        "Dégorgementは瓶内二次発酵後の澱抜きで、Tirageより前ではありません。",
-        "Remuageは瓶内二次発酵後に澱を瓶口へ集める工程です。"
+        "正解です。圧搾後、瓶内二次発酵の準備であるTirageへ進み、瓶内二次発酵を経て打栓します。",
+        "Dosageは澱抜き後の甘味調整で、最初の工程ではありません。",
+        "Dosageは瓶内二次発酵や澱抜きの後に行われます。",
+        "Bouchageは最終的な打栓で、Dégorgementより前に置く流れではありません。"
       ]
     },
     {
@@ -669,15 +669,15 @@
     {
       id: "champagne-three-varieties",
       importance: "A",
-      question: "シャンパーニュ地方の主要3品種の組み合わせとして正しいものはどれですか？",
-      choices: ["Chardonnay / Pinot Noir / Meunier", "Riesling / Sylvaner / Gewurztraminer", "Semillon / Sauvignon Blanc / Muscadelle", "Grenache / Syrah / Mourvèdre"],
+      question: "シャンパーニュ地方の主要3品種の別名として正しいものはどれですか？",
+      choices: ["Schwarzriesling", "Furmint", "Monastrell", "Prugnolo Gentile"],
       answer: 0,
-      note: "主要3品種はChardonnay、Pinot Noir、Meunierです。",
+      note: "SchwarzrieslingはMeunierの別名です。",
       notes: [
-        "正解です。主要3品種はChardonnay、Pinot Noir、Meunierです。",
-        "Riesling、Sylvaner、Gewurztraminerはアルザスで重要です。",
-        "Semillon、Sauvignon Blanc、Muscadelleはボルドー白で重要です。",
-        "Grenache、Syrah、Mourvèdreは南部ローヌなどのブレンドで重要です。"
+        "正解です。SchwarzrieslingはMeunierの別名です。",
+        "FurmintはハンガリーのTokajiなどで重要な白ブドウ品種です。",
+        "MonastrellはMourvèdreのスペイン名です。",
+        "Prugnolo GentileはSangiovese系品種の名称で、Vino Nobile di Montepulcianoで問われます。"
       ]
     },
     {
@@ -712,6 +712,791 @@
 
   champagneTrendQuestions.forEach((item) => {
     addDetailed(item.id, "フランス / シャンパーニュ", item.importance, item.question, item.choices, item.answer, item.note, item.notes);
+  });
+
+  const focusedSinglePointQuestions = [
+    {
+      id: "it-veneto-prosecco-glera",
+      category: "イタリア / ヴェネト",
+      importance: "A",
+      question: "Proseccoで主要品種として使用されるものはどれですか？",
+      choices: ["Glera", "Corvina", "Garganega", "Trebbiano Toscano"],
+      answer: 0,
+      note: "Proseccoの主要品種はGleraです。",
+      notes: [
+        "正解です。Proseccoの主要品種はGleraです。",
+        "CorvinaはValpolicellaやAmaroneで重要な黒ブドウ品種です。",
+        "GarganegaはSoaveで重要な白ブドウ品種です。",
+        "Trebbiano ToscanoはProseccoの主要品種ではありません。"
+      ]
+    },
+    {
+      id: "it-veneto-amarone-method",
+      category: "イタリア / ヴェネト",
+      importance: "A",
+      question: "Amarone della Valpolicellaの製法として正しいものはどれですか？",
+      choices: ["陰干しブドウを使用する", "瓶内二次発酵を行う", "貴腐ブドウを使用する", "マセラシオン・カルボニックを行う"],
+      answer: 0,
+      note: "Amarone della Valpolicellaは陰干しブドウから造る辛口赤ワインです。",
+      notes: [
+        "正解です。Amarone della Valpolicellaは陰干しブドウから造る辛口赤ワインです。",
+        "瓶内二次発酵はFranciacortaやChampagneなどの発泡性ワインで重要です。",
+        "貴腐ブドウはSauternesやTokajiなどの甘口ワインで問われます。",
+        "マセラシオン・カルボニックはBeaujolaisなどで知られる醸造法です。"
+      ]
+    },
+    {
+      id: "it-veneto-soave-garganega",
+      category: "イタリア / ヴェネト",
+      importance: "A",
+      question: "Soaveの主要品種として正しいものはどれですか？",
+      choices: ["Garganega", "Glera", "Corvina", "Nebbiolo"],
+      answer: 0,
+      note: "Soaveの主要品種はGarganegaです。",
+      notes: [
+        "正解です。Soaveの主要品種はGarganegaです。",
+        "GleraはProseccoで重要な品種です。",
+        "CorvinaはValpolicellaやAmaroneで重要な品種です。",
+        "NebbioloはピエモンテのBaroloやBarbarescoで重要な品種です。"
+      ]
+    },
+    {
+      id: "it-veneto-valpolicella-corvina",
+      category: "イタリア / ヴェネト",
+      importance: "A",
+      question: "Valpolicellaで中心となる黒ブドウ品種はどれですか？",
+      choices: ["Corvina", "Glera", "Garganega", "Sangiovese"],
+      answer: 0,
+      note: "ValpolicellaではCorvinaが中心品種です。",
+      notes: [
+        "正解です。ValpolicellaではCorvinaが中心品種です。",
+        "GleraはProseccoで重要な白ブドウ品種です。",
+        "GarganegaはSoaveで重要な白ブドウ品種です。",
+        "Sangioveseはトスカーナで重要な黒ブドウ品種です。"
+      ]
+    },
+    {
+      id: "jp-koshu-leading-white",
+      category: "日本",
+      importance: "A",
+      question: "日本を代表する白ブドウ品種として正しいものはどれですか？",
+      choices: ["甲州", "マスカット・ベーリーA", "ヤマ・ソーヴィニヨン", "小公子"],
+      answer: 0,
+      note: "甲州は日本を代表する白ブドウ品種です。",
+      notes: [
+        "正解です。甲州は日本を代表する白ブドウ品種です。",
+        "マスカット・ベーリーAは日本で重要な黒ブドウ品種です。",
+        "ヤマ・ソーヴィニヨンは日本の交配品種ですが、代表的白品種ではありません。",
+        "小公子は日本で見られる黒ブドウ品種です。"
+      ]
+    },
+    {
+      id: "jp-muscat-bailey-a-breeder",
+      category: "日本",
+      importance: "A",
+      question: "マスカット・ベーリーAを交配した人物は誰ですか？",
+      choices: ["川上善兵衛", "麻井宇介", "大日本山梨葡萄酒会社", "ルイ・パストゥール"],
+      answer: 0,
+      note: "マスカット・ベーリーAは川上善兵衛が交配した黒ブドウ品種です。",
+      notes: [
+        "正解です。マスカット・ベーリーAは川上善兵衛が交配した黒ブドウ品種です。",
+        "麻井宇介は日本ワイン史で重要な人物ですが、マスカット・ベーリーAの交配者ではありません。",
+        "大日本山梨葡萄酒会社は日本ワイン史で重要な会社名です。",
+        "ルイ・パストゥールは発酵研究で重要な人物です。"
+      ]
+    },
+    {
+      id: "bordeaux-right-bank-merlot",
+      category: "フランス / ボルドー",
+      importance: "A",
+      question: "ボルドー右岸で主体となりやすい黒ブドウ品種はどれですか？",
+      choices: ["Merlot", "Cabernet Sauvignon", "Syrah", "Pinot Noir"],
+      answer: 0,
+      note: "ボルドー右岸ではMerlotが主体になりやすい品種です。",
+      notes: [
+        "正解です。ボルドー右岸ではMerlotが主体になりやすい品種です。",
+        "Cabernet Sauvignonはボルドー左岸で主体になりやすい品種です。",
+        "Syrahは北部ローヌで重要な黒ブドウ品種です。",
+        "Pinot Noirはブルゴーニュで重要な黒ブドウ品種です。"
+      ]
+    },
+    {
+      id: "bordeaux-left-bank-cabernet",
+      category: "フランス / ボルドー",
+      importance: "A",
+      question: "ボルドー左岸で主体となりやすい黒ブドウ品種はどれですか？",
+      choices: ["Cabernet Sauvignon", "Merlot", "Gamay", "Nebbiolo"],
+      answer: 0,
+      note: "ボルドー左岸ではCabernet Sauvignonが主体になりやすい品種です。",
+      notes: [
+        "正解です。ボルドー左岸ではCabernet Sauvignonが主体になりやすい品種です。",
+        "Merlotはボルドー右岸で主体になりやすい品種です。",
+        "GamayはBeaujolaisで重要な黒ブドウ品種です。",
+        "Nebbioloはピエモンテで重要な黒ブドウ品種です。"
+      ]
+    }
+  ];
+
+  focusedSinglePointQuestions.forEach((item) => {
+    addDetailed(item.id, item.category, item.importance, item.question, item.choices, item.answer, item.note, item.notes);
+  });
+
+  const italyTrendQuestions = [
+    {
+      id: "italy-lombardia-franciacorta",
+      category: "イタリア / ロンバルディア",
+      importance: "A",
+      question: "Franciacortaの産地として正しいイタリアの州はどれですか？",
+      choices: ["ロンバルディア", "ヴァッレ・ダオスタ", "プーリア", "カンパーニア"],
+      answer: 0,
+      note: "Franciacortaはロンバルディア州の瓶内二次発酵による発泡性ワインです。",
+      notes: [
+        "正解です。Franciacortaはロンバルディア州の瓶内二次発酵による発泡性ワインです。",
+        "ヴァッレ・ダオスタはイタリア北西部の山岳州です。",
+        "プーリアはPrimitivoやNegroamaroで重要な南部の州です。",
+        "カンパーニアはTaurasi、Fiano di Avellino、Greco di Tufoで重要です。"
+      ]
+    },
+    {
+      id: "italy-north-emilia-romagna",
+      category: "イタリア / 中部",
+      importance: "B",
+      question: "イタリアで一般的に北部イタリアに分類される州はどれですか？",
+      choices: ["エミリア・ロマーニャ", "モリーゼ", "バジリカータ", "トスカーナ"],
+      answer: 0,
+      note: "エミリア・ロマーニャは北部イタリアに分類されます。",
+      notes: [
+        "正解です。エミリア・ロマーニャは北部イタリアに分類されます。",
+        "モリーゼは南部イタリアに分類されます。",
+        "バジリカータは南部イタリアに分類されます。",
+        "トスカーナは中部イタリアに分類されます。"
+      ]
+    },
+    {
+      id: "italy-veneto-capital",
+      category: "イタリア / ヴェネト",
+      importance: "B",
+      question: "ヴェネト州の州都はどれですか？",
+      choices: ["ヴェネツィア", "トリエステ", "ジェノヴァ", "ポテンツァ"],
+      answer: 0,
+      note: "ヴェネト州の州都はヴェネツィアです。",
+      notes: [
+        "正解です。ヴェネト州の州都はヴェネツィアです。",
+        "トリエステはフリウリ・ヴェネツィア・ジューリア州の州都です。",
+        "ジェノヴァはリグーリア州の州都です。",
+        "ポテンツァはバジリカータ州の州都です。"
+      ]
+    },
+    {
+      id: "italy-trentino-dolomites",
+      category: "イタリア / トレンティーノ・アルト・アディジェ",
+      importance: "B",
+      question: "トレンティーノ・アルト・アディジェ州と関係が深い世界遺産はどれですか？",
+      choices: ["ドロミーティ山塊", "カステル・デル・モンテ", "チンクエ・テッレの段々畑", "ランゲ・ロエロ・モンフェッラートの葡萄畑"],
+      answer: 0,
+      note: "ドロミーティ山塊はトレンティーノ・アルト・アディジェ州と関係が深い世界遺産です。",
+      notes: [
+        "正解です。ドロミーティ山塊はトレンティーノ・アルト・アディジェ州と関係が深い世界遺産です。",
+        "カステル・デル・モンテはプーリア州の世界遺産です。",
+        "チンクエ・テッレはリグーリア州の海沿いの景観です。",
+        "ランゲ・ロエロ・モンフェッラートはピエモンテ州の葡萄畑景観です。"
+      ]
+    },
+    {
+      id: "italy-vino-novello-vintage",
+      category: "イタリア / 法律・格付け",
+      importance: "B",
+      question: "イタリアのVino Novelloに関する記述として正しいものはどれですか？",
+      choices: ["収穫年の表示が必要である", "炭酸ガス浸漬法のワインを100%使用する", "D.O.C.G.ワインのみに認められる", "最低アルコール度数は8%である"],
+      answer: 0,
+      note: "Vino Novelloは収穫年の表示が必要です。",
+      notes: [
+        "正解です。Vino Novelloは収穫年の表示が必要です。",
+        "炭酸ガス浸漬法のワインを100%使用する必要はありません。",
+        "D.O.C.G.ワインのみに限定される表示ではありません。",
+        "最低アルコール度数8%という条件ではありません。"
+      ]
+    },
+    {
+      id: "italy-brunello-sangiovese-synonym",
+      category: "イタリア / トスカーナ",
+      importance: "A",
+      question: "Brunello di Montalcinoで用いられるSangioveseのこの地方での別名はどれですか？",
+      choices: ["Brunello", "Prugnolo Gentile", "Spanna", "Chiavennasca"],
+      answer: 0,
+      note: "Brunello di MontalcinoではSangioveseをBrunelloと呼びます。",
+      notes: [
+        "正解です。Brunello di MontalcinoではSangioveseをBrunelloと呼びます。",
+        "Prugnolo GentileはVino Nobile di Montepulcianoで用いられるSangiovese系の名称です。",
+        "SpannaはNebbioloの別名です。",
+        "ChiavennascaもNebbioloの別名です。"
+      ]
+    },
+    {
+      id: "italy-still-wine-sugar-amabile",
+      category: "イタリア / 法律・格付け",
+      importance: "B",
+      question: "イタリアのスティルワインの風味表示で、残糖12〜45g/Lに該当するものはどれですか？",
+      choices: ["Amabile", "Abboccato", "Secco", "Dolce"],
+      answer: 0,
+      note: "残糖12〜45g/Lの表示はAmabileです。",
+      notes: [
+        "正解です。残糖12〜45g/Lの表示はAmabileです。",
+        "AbboccatoはAmabileより残糖が少ない範囲で用いられます。",
+        "Seccoは辛口を示します。",
+        "DolceはAmabileより甘い範囲で用いられます。"
+      ]
+    },
+    {
+      id: "italy-largest-variety-sangiovese",
+      category: "イタリア総まとめ",
+      importance: "A",
+      question: "イタリアで栽培面積が最も大きいブドウ品種はどれですか？",
+      choices: ["Sangiovese", "Trebbiano Toscano", "Barbera", "Merlot"],
+      answer: 0,
+      note: "イタリアで栽培面積が最も大きい品種はSangioveseです。",
+      notes: [
+        "正解です。イタリアで栽培面積が最も大きい品種はSangioveseです。",
+        "Trebbiano Toscanoは白ブドウの主要品種ですが、全体1位ではありません。",
+        "Barberaはピエモンテなどで重要な黒ブドウ品種です。",
+        "Merlotも栽培されていますが、イタリア全体の1位ではありません。"
+      ]
+    },
+    {
+      id: "italy-lazio-est-est-est",
+      category: "イタリア / 中部",
+      importance: "B",
+      question: "Est! Est!! Est!!!で知られる州はどれですか？",
+      choices: ["ラツィオ", "リグーリア", "モリーゼ", "トレンティーノ・アルト・アディジェ"],
+      answer: 0,
+      note: "Est! Est!! Est!!!はラツィオ州の白ワインで問われます。",
+      notes: [
+        "正解です。Est! Est!! Est!!!はラツィオ州の白ワインで問われます。",
+        "リグーリアはチンクエ・テッレやヴェルメンティーノで問われます。",
+        "モリーゼは南部の小州です。",
+        "トレンティーノ・アルト・アディジェは北部山岳地域です。"
+      ]
+    }
+  ];
+
+  italyTrendQuestions.forEach((item) => {
+    addDetailed(item.id, item.category, item.importance, item.question, item.choices, item.answer, item.note, item.notes);
+  });
+
+  const italyDocgTrendQuestions = [
+    {
+      id: "italy-piemonte-flavored-barolo-chinato",
+      category: "イタリア / ピエモンテ",
+      importance: "B",
+      question: "ピエモンテ州で生産されるフレーヴァードワインはどれですか？",
+      choices: ["Barolo Chinato", "Nizza", "Erbaluce di Caluso", "Ruchè di Castagnole Monferrato"],
+      answer: 0,
+      note: "Barolo ChinatoはBaroloをベースに香草・スパイスで風味付けするピエモンテのフレーヴァードワインです。",
+      notes: [
+        "正解です。Barolo ChinatoはBaroloをベースに香草・スパイスで風味付けするピエモンテのフレーヴァードワインです。",
+        "NizzaはBarberaによるピエモンテの赤ワインD.O.C.G.です。",
+        "Erbaluce di CalusoはErbaluceを用いるピエモンテの白・発泡・甘口ワインです。",
+        "Ruchè di Castagnole MonferratoはRuchèによるピエモンテの赤ワインD.O.C.G.です。"
+      ]
+    },
+    {
+      id: "italy-docg-barolo-red-only",
+      category: "イタリア / ピエモンテ",
+      importance: "A",
+      question: "イタリアのD.O.C.G.のうち、赤ワインのみが認められているものはどれですか？",
+      choices: ["Barolo", "Conegliano Valdobbiadene-Prosecco", "Soave Superiore", "Asti"],
+      answer: 0,
+      note: "BaroloはNebbioloから造られる赤ワインのみのD.O.C.G.です。",
+      notes: [
+        "正解です。BaroloはNebbioloから造られる赤ワインのみのD.O.C.G.です。",
+        "Conegliano Valdobbiadene-ProseccoはGlera主体の発泡性ワインです。",
+        "Soave SuperioreはGarganega主体の白ワインです。",
+        "AstiはMoscato Bianco主体の発泡性甘口ワインで問われます。"
+      ]
+    },
+    {
+      id: "italy-frascati-malvasia",
+      category: "イタリア / 中部",
+      importance: "B",
+      question: "Frascati Superioreで主要品種として使われるものはどれですか？",
+      choices: ["Malvasia Bianca di Candia", "Sangiovese", "Nebbiolo", "Glera"],
+      answer: 0,
+      note: "Frascati SuperioreはMalvasia系品種を中心に造られるラツィオ州の白ワインです。",
+      notes: [
+        "正解です。Frascati SuperioreはMalvasia系品種を中心に造られるラツィオ州の白ワインです。",
+        "Sangioveseはトスカーナなどで重要な黒ブドウ品種です。",
+        "Nebbioloはピエモンテで重要な黒ブドウ品種です。",
+        "GleraはProseccoで重要な白ブドウ品種です。"
+      ]
+    },
+    {
+      id: "italy-conegliano-valdobbiadene-veneto",
+      category: "イタリア / ヴェネト",
+      importance: "A",
+      question: "Conegliano Valdobbiadene-Proseccoが生産される州はどれですか？",
+      choices: ["ヴェネト", "トスカーナ", "カラブリア", "ピエモンテ"],
+      answer: 0,
+      note: "Conegliano Valdobbiadene-Proseccoはヴェネト州のD.O.C.G.です。",
+      notes: [
+        "正解です。Conegliano Valdobbiadene-Proseccoはヴェネト州のD.O.C.G.です。",
+        "トスカーナはChianti ClassicoやBrunello di Montalcinoで重要です。",
+        "カラブリアは南部イタリアの州です。",
+        "ピエモンテはBaroloやBarbarescoで重要です。"
+      ]
+    },
+    {
+      id: "italy-asti-moscato-bianco",
+      category: "イタリア / ピエモンテ",
+      importance: "A",
+      question: "Astiの主要品種はどれですか？",
+      choices: ["Moscato Bianco", "Dolcetto", "Chiavennasca", "Cesanese"],
+      answer: 0,
+      note: "AstiはMoscato Biancoを用いるピエモンテの発泡性甘口ワインです。",
+      notes: [
+        "正解です。AstiはMoscato Biancoを用いるピエモンテの発泡性甘口ワインです。",
+        "Dolcettoはピエモンテで重要な黒ブドウ品種です。",
+        "ChiavennascaはNebbioloの別名です。",
+        "Cesaneseはラツィオで重要な黒ブドウ品種です。"
+      ]
+    },
+    {
+      id: "italy-colli-bolognesi-pignoletto-spumante",
+      category: "イタリア / 中部",
+      importance: "B",
+      question: "スプマンテが認められているD.O.C.G.はどれですか？",
+      choices: ["Colli Bolognesi Pignoletto", "Torgiano Rosso Riserva", "Lison", "Sagrantino di Montefalco"],
+      answer: 0,
+      note: "Colli Bolognesi Pignolettoではスプマンテも認められています。",
+      notes: [
+        "正解です。Colli Bolognesi Pignolettoではスプマンテも認められています。",
+        "Torgiano Rosso Riservaはウンブリア州の赤ワインD.O.C.G.です。",
+        "Lisonは白ワインのD.O.C.G.です。",
+        "Sagrantino di Montefalcoはウンブリア州の赤ワインD.O.C.G.です。"
+      ]
+    },
+    {
+      id: "italy-cuisine-pollo-alla-romana",
+      category: "イタリア / 中部",
+      importance: "C",
+      question: "ピーマンとトマトで煮込んだ鶏肉料理はどれですか？",
+      choices: ["Pollo alla Romana", "Ossobuco", "Pastissada de Caval", "Peperone Ripieno"],
+      answer: 0,
+      note: "Pollo alla Romanaはピーマンとトマトで煮込むローマ風の鶏肉料理です。",
+      notes: [
+        "正解です。Pollo alla Romanaはピーマンとトマトで煮込むローマ風の鶏肉料理です。",
+        "Ossobucoは仔牛すね肉の煮込み料理です。",
+        "Pastissada de Cavalはヴェネトの馬肉料理です。",
+        "Peperone Ripienoは詰め物をしたピーマン料理です。"
+      ]
+    },
+    {
+      id: "italy-carmignano-cabernet",
+      category: "イタリア / トスカーナ",
+      importance: "B",
+      question: "Carmignanoの主要品種に含まれるものはどれですか？",
+      choices: ["Cabernet Sauvignon", "Manzoni Bianco", "Bellone", "Malvasia del Lazio"],
+      answer: 0,
+      note: "CarmignanoはSangioveseに加え、Cabernet SauvignonやCabernet Francを用いるトスカーナのD.O.C.G.です。",
+      notes: [
+        "正解です。CarmignanoはSangioveseに加え、Cabernet SauvignonやCabernet Francを用いるトスカーナのD.O.C.G.です。",
+        "Manzoni Biancoは北部イタリアで見られる白ブドウ品種です。",
+        "Belloneはラツィオで見られる白ブドウ品種です。",
+        "Malvasia del Lazioはラツィオの白ワインで重要な品種です。"
+      ]
+    },
+    {
+      id: "italy-ruche-red-only",
+      category: "イタリア / ピエモンテ",
+      importance: "B",
+      question: "赤ワインのみが認められているD.O.C.G.はどれですか？",
+      choices: ["Ruchè di Castagnole Monferrato", "Conegliano Valdobbiadene-Prosecco", "Ramandolo", "Offida"],
+      answer: 0,
+      note: "Ruchè di Castagnole Monferratoはピエモンテ州の赤ワインD.O.C.G.です。",
+      notes: [
+        "正解です。Ruchè di Castagnole Monferratoはピエモンテ州の赤ワインD.O.C.G.です。",
+        "Conegliano Valdobbiadene-Proseccoは発泡性ワインのD.O.C.G.です。",
+        "Ramandoloはフリウリの甘口白ワインD.O.C.G.です。",
+        "Offidaは複数タイプが認められるマルケ州のD.O.C.G.です。"
+      ]
+    },
+    {
+      id: "italy-lombardia-docg-franciacorta",
+      category: "イタリア / ロンバルディア",
+      importance: "A",
+      question: "ロンバルディア州のD.O.C.G.として正しいものはどれですか？",
+      choices: ["Franciacorta", "Gavi", "Rosazzo", "Aglianico del Vulture Superiore"],
+      answer: 0,
+      note: "Franciacortaはロンバルディア州のD.O.C.G.です。",
+      notes: [
+        "正解です。Franciacortaはロンバルディア州のD.O.C.G.です。",
+        "Gaviはピエモンテ州のD.O.C.G.です。",
+        "Rosazzoはフリウリ・ヴェネツィア・ジューリア州のD.O.C.G.です。",
+        "Aglianico del Vulture Superioreはバジリカータ州のD.O.C.G.です。"
+      ]
+    }
+  ];
+
+  italyDocgTrendQuestions.forEach((item) => {
+    addDetailed(item.id, item.category, item.importance, item.question, item.choices, item.answer, item.note, item.notes);
+  });
+
+  const burgundyAocTrendQuestions = [
+    {
+      id: "bourgogne-cote-dor-district",
+      category: "フランス / ブルゴーニュ",
+      importance: "A",
+      question: "主にコート・ドール県に属するブルゴーニュ地方の生産地区はどれですか？",
+      choices: ["Côte de Nuits", "Mâconnais", "Grand Auxerrois", "Chablis"],
+      answer: 0,
+      note: "Côte de NuitsはCôte de Beauneとともに主にコート・ドール県に属します。",
+      notes: [
+        "正解です。Côte de NuitsはCôte de Beauneとともに主にコート・ドール県に属します。",
+        "Mâconnaisはソーヌ・エ・ロワール県側の地区です。",
+        "Grand Auxerroisはヨンヌ県側の地区です。",
+        "Chablisはヨンヌ県側の地区です。"
+      ]
+    },
+    {
+      id: "bourgogne-cote-chalonnaise-village",
+      category: "フランス / ブルゴーニュ",
+      importance: "B",
+      question: "Côte Chalonnaise地区の村名A.O.C.はどれですか？",
+      choices: ["Mercurey", "Pouilly-Fuissé", "Viré-Clessé", "Pouilly-Loché"],
+      answer: 0,
+      note: "MercureyはCôte Chalonnaise地区の村名A.O.C.です。",
+      notes: [
+        "正解です。MercureyはCôte Chalonnaise地区の村名A.O.C.です。",
+        "Pouilly-FuisséはMâconnais地区の村名A.O.C.です。",
+        "Viré-ClesséはMâconnais地区の村名A.O.C.です。",
+        "Pouilly-LochéはMâconnais地区の村名A.O.C.です。"
+      ]
+    },
+    {
+      id: "bourgogne-chablis-premier-cru-color",
+      category: "フランス / ブルゴーニュ",
+      importance: "A",
+      question: "Chablis Premier Cruで生産できるワインの種類はどれですか？",
+      choices: ["白ワインのみ", "赤ワインのみ", "赤・白ワイン", "赤・白・ロゼワイン"],
+      answer: 0,
+      note: "Chablis Premier CruはChardonnayによる白ワインのみです。",
+      notes: [
+        "正解です。Chablis Premier CruはChardonnayによる白ワインのみです。",
+        "赤ワインは認められていません。",
+        "赤・白両方ではなく、白ワインのみです。",
+        "ロゼワインも認められていません。"
+      ]
+    },
+    {
+      id: "bourgogne-chablis-description",
+      category: "フランス / ブルゴーニュ",
+      importance: "A",
+      question: "冷涼な気候からミネラル感のあるChardonnayが生まれ、品質により4つのA.O.C.に分かれる地区はどれですか？",
+      choices: ["Chablis", "Mâconnais", "Beaujolais", "Côte Chalonnaise"],
+      answer: 0,
+      note: "Chablisは冷涼な気候とChardonnayの白ワインで知られ、4段階のA.O.C.で問われます。",
+      notes: [
+        "正解です。Chablisは冷涼な気候とChardonnayの白ワインで知られ、4段階のA.O.C.で問われます。",
+        "Mâconnaisはブルゴーニュ南部のChardonnay主体の産地ですが、この説明はChablisです。",
+        "Beaujolaisは主にGamayの赤ワインで問われます。",
+        "Côte ChalonnaiseはMercureyやRullyなどで問われる地区です。"
+      ]
+    },
+    {
+      id: "bourgogne-ladoix-color",
+      category: "フランス / ブルゴーニュ",
+      importance: "B",
+      question: "Ladoixで生産できるワインの種類はどれですか？",
+      choices: ["赤・白ワイン", "赤ワインのみ", "白ワインのみ", "赤・白・ロゼワイン"],
+      answer: 0,
+      note: "Ladoixでは赤ワインと白ワインが認められています。",
+      notes: [
+        "正解です。Ladoixでは赤ワインと白ワインが認められています。",
+        "赤ワインのみではありません。",
+        "白ワインのみではありません。",
+        "ロゼワインは含みません。"
+      ]
+    },
+    {
+      id: "bourgogne-pommard-color",
+      category: "フランス / ブルゴーニュ",
+      importance: "A",
+      question: "Pommardで生産できるワインの種類はどれですか？",
+      choices: ["赤ワインのみ", "白ワインのみ", "赤・白ワイン", "赤・白・ロゼワイン"],
+      answer: 0,
+      note: "Pommardは赤ワインのみの村名A.O.C.です。",
+      notes: [
+        "正解です。Pommardは赤ワインのみの村名A.O.C.です。",
+        "白ワインは認められていません。",
+        "赤・白両方ではありません。",
+        "ロゼワインも認められていません。"
+      ]
+    },
+    {
+      id: "bourgogne-cote-de-brouilly-color",
+      category: "フランス / ブルゴーニュ",
+      importance: "B",
+      question: "Côte de Brouillyで生産できるワインの種類はどれですか？",
+      choices: ["赤ワインのみ", "白ワインのみ", "ロゼワインのみ", "赤・白・ロゼワイン"],
+      answer: 0,
+      note: "Côte de BrouillyはBeaujolais地区のクリュで、赤ワインのみです。",
+      notes: [
+        "正解です。Côte de BrouillyはBeaujolais地区のクリュで、赤ワインのみです。",
+        "白ワインは認められていません。",
+        "ロゼワインのみではありません。",
+        "赤・白・ロゼすべてではありません。"
+      ]
+    },
+    {
+      id: "bourgogne-nuits-saint-georges-color",
+      category: "フランス / ブルゴーニュ",
+      importance: "B",
+      question: "Nuits-Saint-Georgesで生産できるワインの種類はどれですか？",
+      choices: ["赤・白ワイン", "赤ワインのみ", "白ワインのみ", "ロゼワインのみ"],
+      answer: 0,
+      note: "Nuits-Saint-Georgesでは赤ワインと白ワインが認められています。",
+      notes: [
+        "正解です。Nuits-Saint-Georgesでは赤ワインと白ワインが認められています。",
+        "赤ワインのみではありません。",
+        "白ワインのみではありません。",
+        "ロゼワインのみではありません。"
+      ]
+    },
+    {
+      id: "bourgogne-saint-bris-variety",
+      category: "フランス / ブルゴーニュ",
+      importance: "A",
+      question: "Saint-Brisで用いられる主要品種はどれですか？",
+      choices: ["Sauvignon Blanc", "Chardonnay", "Pinot Noir", "Gamay"],
+      answer: 0,
+      note: "Saint-Brisはブルゴーニュで例外的にSauvignon Blancを用いるA.O.C.です。",
+      notes: [
+        "正解です。Saint-Brisはブルゴーニュで例外的にSauvignon Blancを用いるA.O.C.です。",
+        "ChardonnayはChablisや多くのブルゴーニュ白で重要ですが、Saint-Brisの主要品種ではありません。",
+        "Pinot Noirはブルゴーニュ赤の基本品種です。",
+        "GamayはBeaujolaisで重要な黒ブドウ品種です。"
+      ]
+    },
+    {
+      id: "bourgogne-rully-area",
+      category: "フランス / ブルゴーニュ",
+      importance: "B",
+      question: "Rullyが位置するブルゴーニュ地方の地区はどれですか？",
+      choices: ["Côte Chalonnaise", "Côte de Nuits", "Chablis", "Beaujolais"],
+      answer: 0,
+      note: "RullyはCôte Chalonnaise地区の村名A.O.C.です。",
+      notes: [
+        "正解です。RullyはCôte Chalonnaise地区の村名A.O.C.です。",
+        "Côte de Nuitsではありません。",
+        "Chablis地区ではありません。",
+        "Beaujolais地区ではありません。"
+      ]
+    },
+    {
+      id: "bourgogne-pinot-noir-share",
+      category: "フランス / ブルゴーニュ",
+      importance: "B",
+      question: "ボージョレ地区を除くブルゴーニュで、Pinot Noirが占める栽培比率に最も近いものはどれですか？",
+      choices: ["39.5%", "30.5%", "51%", "62%"],
+      answer: 0,
+      note: "ボージョレを除くブルゴーニュでは、Pinot Noirの栽培比率は約39.5%が目安です。",
+      notes: [
+        "正解です。ボージョレを除くブルゴーニュでは、Pinot Noirの栽培比率は約39.5%が目安です。",
+        "30.5%ではやや低い数値です。",
+        "51%では高すぎます。",
+        "62%では高すぎます。"
+      ]
+    },
+    {
+      id: "bourgogne-aoc-count",
+      category: "フランス / ブルゴーニュ",
+      importance: "B",
+      question: "ブルゴーニュ地方のA.O.C.総数に最も近いものはどれですか？",
+      choices: ["約80個", "約20個", "約40個", "約160個"],
+      answer: 0,
+      note: "ブルゴーニュ地方のA.O.C.総数は約80個が目安です。",
+      notes: [
+        "正解です。ブルゴーニュ地方のA.O.C.総数は約80個が目安です。",
+        "約20個では少なすぎます。",
+        "約40個では少なすぎます。",
+        "約160個では多すぎます。"
+      ]
+    },
+    {
+      id: "bourgogne-cote-de-nuits-order",
+      category: "フランス / ブルゴーニュ",
+      importance: "A",
+      question: "Côte de Nuits地区の村を北から南へ並べたものとして正しいものはどれですか？",
+      choices: ["Fixin → Morey-Saint-Denis → Chambolle-Musigny → Vosne-Romanée", "Gevrey-Chambertin → Chambolle-Musigny → Marsannay → Morey-Saint-Denis", "Chambolle-Musigny → Vosne-Romanée → Marsannay → Vougeot", "Vosne-Romanée → Morey-Saint-Denis → Gevrey-Chambertin → Chambolle-Musigny"],
+      answer: 0,
+      note: "Côte de Nuitsは北からFixin、Gevrey-Chambertin、Morey-Saint-Denis、Chambolle-Musigny、Vougeot、Vosne-Romanée方面へ続きます。",
+      notes: [
+        "正解です。Fixinから南へMorey-Saint-Denis、Chambolle-Musigny、Vosne-Romanée方面へ続きます。",
+        "MarsannayはCôte de Nuitsの北端側なので、この位置ではありません。",
+        "MarsannayはChambolle-MusignyやVosne-Romanéeより北です。",
+        "Vosne-RomanéeはGevrey-ChambertinやMorey-Saint-Denisより南です。"
+      ]
+    },
+    {
+      id: "bourgogne-red-only-aoc-gevery",
+      category: "フランス / ブルゴーニュ",
+      importance: "A",
+      question: "次のうち、赤ワインのみを生産できるブルゴーニュのA.O.C.はどれですか？",
+      choices: ["Gevrey-Chambertin", "Meursault", "Saint-Bris", "Chassagne-Montrachet"],
+      answer: 0,
+      note: "Gevrey-Chambertinは赤ワインのみの村名A.O.C.です。",
+      notes: [
+        "正解です。Gevrey-Chambertinは赤ワインのみの村名A.O.C.です。",
+        "Meursaultは白ワインの村として重要です。",
+        "Saint-BrisはSauvignon Blancの白ワインで問われます。",
+        "Chassagne-Montrachetでは赤ワインと白ワインが認められます。"
+      ]
+    },
+    {
+      id: "bourgogne-red-white-aoc-mercurey",
+      category: "フランス / ブルゴーニュ",
+      importance: "B",
+      question: "次のうち、赤ワインと白ワインを生産できるブルゴーニュのA.O.C.はどれですか？",
+      choices: ["Mercurey", "Irancy", "Chénas", "Volnay"],
+      answer: 0,
+      note: "Mercureyでは赤ワインと白ワインが認められています。",
+      notes: [
+        "正解です。Mercureyでは赤ワインと白ワインが認められています。",
+        "Irancyは赤ワインで問われるA.O.C.です。",
+        "ChénasはBeaujolaisのクリュで赤ワインのみです。",
+        "Volnayは赤ワインのみの村名A.O.C.です。"
+      ]
+    }
+  ];
+
+  burgundyAocTrendQuestions.forEach((item) => {
+    addDetailed(item.id, item.category, item.importance, item.question, item.choices, item.answer, item.note, item.notes);
+  });
+
+  const burgundyGrandCruTrendQuestions = [
+    {
+      id: "bourgogne-la-grande-rue-village",
+      category: "フランス / ブルゴーニュ",
+      importance: "A",
+      question: "Grand Cru「La Grande Rue」が属する村はどれですか？",
+      choices: ["Vosne-Romanée", "Aloxe-Corton", "Gevrey-Chambertin", "Puligny-Montrachet"],
+      answer: 0,
+      note: "La Grande RueはVosne-Romanée村のGrand Cruです。",
+      notes: [
+        "正解です。La Grande RueはVosne-Romanée村のGrand Cruです。",
+        "Aloxe-CortonはCortonの丘で重要な村です。",
+        "Gevrey-ChambertinはChambertin系Grand Cruで重要な村です。",
+        "Puligny-MontrachetはMontrachet系Grand Cruで重要な村です。"
+      ]
+    },
+    {
+      id: "bourgogne-clos-de-la-roche-grand-cru",
+      category: "フランス / ブルゴーニュ",
+      importance: "A",
+      question: "次のうち、ブルゴーニュ地方のGrand Cruはどれですか？",
+      choices: ["Clos de la Roche", "Aux Malconsorts", "Les Grands Champs", "Hervelets"],
+      answer: 0,
+      note: "Clos de la RocheはMorey-Saint-Denis村のGrand Cruです。",
+      notes: [
+        "正解です。Clos de la RocheはMorey-Saint-Denis村のGrand Cruです。",
+        "Aux MalconsortsはVosne-RomanéeのPremier Cruで問われます。",
+        "Les Grands ChampsはGrand Cru名ではありません。",
+        "HerveletsはPremier Cru名として問われます。"
+      ]
+    },
+    {
+      id: "bourgogne-mazoyeres-chambertin-grand-cru",
+      category: "フランス / ブルゴーニュ",
+      importance: "A",
+      question: "Gevrey-Chambertin村のGrand Cruとして正しいものはどれですか？",
+      choices: ["Mazoyères-Chambertin", "Les Duresses", "Clos des Varoilles", "Perrières"],
+      answer: 0,
+      note: "Mazoyères-ChambertinはGevrey-Chambertin村のGrand Cruです。",
+      notes: [
+        "正解です。Mazoyères-ChambertinはGevrey-Chambertin村のGrand Cruです。",
+        "Les DuressesはAuxey-Duressesで問われるPremier Cru名です。",
+        "Clos des VaroillesはPremier Cru名として問われます。",
+        "Perrièresは複数村に見られるPremier Cru名で、ここではGrand Cruではありません。"
+      ]
+    },
+    {
+      id: "bourgogne-chablis-premier-cru-beauroy",
+      category: "フランス / ブルゴーニュ",
+      importance: "B",
+      question: "次のうち、Chablis Premier Cruとして正しいものはどれですか？",
+      choices: ["Beauroy", "Clos Saint-Jacques", "Clos des 60 Ouvrées", "Perrières"],
+      answer: 0,
+      note: "BeauroyはChablis Premier Cruです。",
+      notes: [
+        "正解です。BeauroyはChablis Premier Cruです。",
+        "Clos Saint-JacquesはGevrey-ChambertinのPremier Cruで問われます。",
+        "Clos des 60 OuvréesはChablis Premier Cruではありません。",
+        "PerrièresはMeursaultなどで重要なPremier Cru名です。"
+      ]
+    },
+    {
+      id: "bourgogne-corton-villages",
+      category: "フランス / ブルゴーニュ",
+      importance: "A",
+      question: "Grand Cru「Corton」が属する村の組み合わせとして正しいものはどれですか？",
+      choices: ["Pernand-Vergelesses / Aloxe-Corton / Ladoix-Serrigny", "Pernand-Vergelesses / Aloxe-Corton", "Pernand-Vergelesses / Ladoix-Serrigny", "Aloxe-Corton / Ladoix-Serrigny"],
+      answer: 0,
+      note: "CortonはPernand-Vergelesses、Aloxe-Corton、Ladoix-SerrignyにまたがるGrand Cruです。",
+      notes: [
+        "正解です。CortonはPernand-Vergelesses、Aloxe-Corton、Ladoix-SerrignyにまたがるGrand Cruです。",
+        "Ladoix-Serrignyも含まれます。",
+        "Aloxe-Cortonも含まれます。",
+        "Pernand-Vergelessesも含まれます。"
+      ]
+    },
+    {
+      id: "bourgogne-chevalier-montrachet-village",
+      category: "フランス / ブルゴーニュ",
+      importance: "A",
+      question: "Grand Cru「Chevalier-Montrachet」が属する村はどれですか？",
+      choices: ["Puligny-Montrachet", "Chassagne-Montrachet", "Meursault / Puligny-Montrachet", "Puligny-Montrachet / Chassagne-Montrachet"],
+      answer: 0,
+      note: "Chevalier-MontrachetはPuligny-Montrachet村のGrand Cruです。",
+      notes: [
+        "正解です。Chevalier-MontrachetはPuligny-Montrachet村のGrand Cruです。",
+        "Chassagne-Montrachet村単独ではありません。",
+        "Meursault村にはGrand Cruがありません。",
+        "Puligny-MontrachetとChassagne-MontrachetにまたがるのはMontrachetなどで問われます。"
+      ]
+    },
+    {
+      id: "bourgogne-la-moutonne",
+      category: "フランス / ブルゴーニュ",
+      importance: "B",
+      question: "Chablis地区で、VaudésirとPreusesにまたがる非公式なGrand Cruはどれですか？",
+      choices: ["La Moutonne", "Grenouilles", "Fourchaume", "Vaillons"],
+      answer: 0,
+      note: "La MoutonneはVaudésirとPreusesにまたがる非公式なGrand Cruとして問われます。",
+      notes: [
+        "正解です。La MoutonneはVaudésirとPreusesにまたがる非公式なGrand Cruとして問われます。",
+        "GrenouillesはChablisの公式Grand Cruの一つです。",
+        "FourchaumeはChablis Premier Cruです。",
+        "VaillonsはChablis Premier Cruです。"
+      ]
+    },
+    {
+      id: "bourgogne-griotte-chambertin-color",
+      category: "フランス / ブルゴーニュ",
+      importance: "B",
+      question: "Grand Cru「Griotte-Chambertin」で生産できるワインの種類はどれですか？",
+      choices: ["赤ワインのみ", "白ワインのみ", "赤・白ワイン", "赤・白・ロゼワイン"],
+      answer: 0,
+      note: "Griotte-ChambertinはGevrey-Chambertin村の赤ワインGrand Cruです。",
+      notes: [
+        "正解です。Griotte-ChambertinはGevrey-Chambertin村の赤ワインGrand Cruです。",
+        "白ワインは認められていません。",
+        "赤・白両方ではありません。",
+        "ロゼワインも認められていません。"
+      ]
+    }
+  ];
+
+  burgundyGrandCruTrendQuestions.forEach((item) => {
+    addDetailed(item.id, item.category, item.importance, item.question, item.choices, item.answer, item.note, item.notes);
   });
 
   const freeRangeReferenceQuestions = [

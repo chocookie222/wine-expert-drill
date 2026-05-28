@@ -157,11 +157,19 @@ function collectBuiltInQuestions() {
     if (!Array.isArray(question.choices) || question.choices.length !== 4) return false;
     if (!Number.isInteger(question.answer) || question.answer < 0 || question.answer > 3) return false;
     if (inactiveQuestionIds.has(id)) return false;
+    if (String(id).startsWith("phase1-balance-")) return false;
     if (seen.has(id)) return false;
     if (seenQuestionTexts.has(questionText)) return false;
     if (questionText.includes("左岸で主体となりやすい")) return false;
     if (questionText.includes("品種が属する地域")) return false;
+    if (questionText.includes("組み合わせ")) return false;
     if (questionText.includes("を含む組み合わせ")) return false;
+    if (questionText.includes("周辺の知識")) return false;
+    if (questionText.includes("について、次の組み合わせで正しいもの")) return false;
+    if (questionText.includes("正しい組み合わせ")) return false;
+    if (questionText.includes("誤っている組み合わせ")) return false;
+    if (questionText.includes("について、産地・事項の組み合わせ")) return false;
+    if (questionText.includes("まとめて判別")) return false;
     if (questionText.includes("Sauternesを含む組み合わせ")) return false;
     if (questionText.includes("ボルドー甘口白で中心となる品種とスタイル") && questionText.includes("組み合わせ")) return false;
     if (questionText.includes("手がかり")) return false;
@@ -635,16 +643,17 @@ function questionId(question, index = 0) {
 
 function isUsefulExamQuestion(question) {
   const text = String(question.question || "");
-  const choices = Array.isArray(question.choices) ? question.choices : [];
   if (text.includes("組み合わせ")) {
-    const pairChoices = choices.map((choice) => String(choice).split(" - ").map((part) => part.trim()));
-    const leftParts = pairChoices.map((parts) => parts[0]).filter(Boolean);
-    const rightParts = pairChoices.map((parts) => parts[1]).filter(Boolean);
-    if (leftParts.length >= 4 && new Set(leftParts).size <= 2) return false;
-    if (rightParts.length >= 4 && new Set(rightParts).size <= 2) return false;
+    return false;
   }
   if (text.includes("と結びつく事項として適切なもの")) return false;
+  if (text.includes("正しい組み合わせ")) return false;
+  if (text.includes("誤っている組み合わせ")) return false;
   if (text.includes("を含む組み合わせ")) return false;
+  if (text.includes("周辺の知識")) return false;
+  if (text.includes("について、次の組み合わせで正しいもの")) return false;
+  if (text.includes("について、産地・事項の組み合わせ")) return false;
+  if (text.includes("まとめて判別")) return false;
   if (text.includes("説明として最も適切")) return false;
   if (text.includes("正しく結びつく事項")) return false;
   if (text.includes("判別する事項")) return false;
