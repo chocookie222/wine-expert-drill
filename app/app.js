@@ -154,11 +154,14 @@ function collectBuiltInQuestions() {
     if (acceptedCount >= totalQuestionLimit) return false;
     const id = questionId(question);
     const questionText = String(question.question).replace(/\s+/g, " ").trim();
+    if (!Array.isArray(question.choices) || question.choices.length !== 4) return false;
+    if (!Number.isInteger(question.answer) || question.answer < 0 || question.answer > 3) return false;
     if (inactiveQuestionIds.has(id)) return false;
     if (seen.has(id)) return false;
     if (seenQuestionTexts.has(questionText)) return false;
     if (questionText.includes("左岸で主体となりやすい")) return false;
     if (questionText.includes("品種が属する地域")) return false;
+    if (questionText.includes("を含む組み合わせ")) return false;
     if (questionText.includes("Sauternesを含む組み合わせ")) return false;
     if (questionText.includes("ボルドー甘口白で中心となる品種とスタイル") && questionText.includes("組み合わせ")) return false;
     if (questionText.includes("手がかり")) return false;
@@ -166,6 +169,7 @@ function collectBuiltInQuestions() {
     if (questionText.includes("判別する事項")) return false;
     if (questionText.includes("正しく結びつく事項")) return false;
     if (questionText.includes("最も関係が深い事項")) return false;
+    if (questionText.includes("説明として最も適切")) return false;
     if (questionText.includes("重要なワインタイプ")) return false;
     if (!isUsefulExamQuestion(question)) return false;
     const limit = categoryLimits.get(question.category);
@@ -640,6 +644,8 @@ function isUsefulExamQuestion(question) {
     if (rightParts.length >= 4 && new Set(rightParts).size <= 2) return false;
   }
   if (text.includes("と結びつく事項として適切なもの")) return false;
+  if (text.includes("を含む組み合わせ")) return false;
+  if (text.includes("説明として最も適切")) return false;
   if (text.includes("正しく結びつく事項")) return false;
   if (text.includes("判別する事項")) return false;
   if (text.includes("最も関係が深い事項")) return false;

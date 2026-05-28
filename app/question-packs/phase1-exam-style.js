@@ -19,6 +19,19 @@
     });
   }
 
+  function addDetailed(id, category, importance, question, choices, answer, note, notes) {
+    questions.push({
+      id: `phase1-exam-style-${id}`,
+      category,
+      importance,
+      question,
+      choices,
+      answer,
+      note,
+      choiceNotes: notes
+    });
+  }
+
   const facts = [
     ["fr-bdx-left", "フランス / ボルドー", "A", "ボルドー左岸", "Cabernet Sauvignon", ["Merlot", "Pinot Noir", "Gamay"], "ボルドー左岸はCabernet Sauvignon主体になりやすく、メドックやグラーヴと結びつけます。"],
     ["fr-bdx-right", "フランス / ボルドー", "A", "ボルドー右岸", "Merlot", ["Cabernet Sauvignon", "Syrah", "Nebbiolo"], "ボルドー右岸はMerlot主体になりやすく、Saint-EmilionやPomerolが重要です。"],
@@ -113,6 +126,230 @@
     "メドック、グラーヴはボルドー左岸に位置する重要地区です。"
   );
 
+  const bordeauxReferenceQuestions = [
+    {
+      id: "fr-bdx-right-bank-soil",
+      importance: "A",
+      question: "ボルドー右岸の土壌傾向として、最も適切なものはどれですか？",
+      choices: ["粘土質土壌", "砂礫質土壌", "花崗岩質土壌", "スレート土壌"],
+      answer: 0,
+      note: "ボルドー右岸では粘土質土壌が重要で、Merlot主体のワインと結びつけて整理します。",
+      notes: [
+        "正解です。ボルドー右岸では粘土質土壌が重要で、Merlot主体のワインと結びつけて整理します。",
+        "砂礫質土壌はボルドー左岸のメドックやグラーヴで多く見られ、Cabernet Sauvignonと結びつけます。",
+        "花崗岩質土壌は北部ローヌなどで意識する土壌で、ボルドー右岸の基本整理ではありません。",
+        "スレート土壌はMoselやPrioratなどで重要な土壌として整理します。"
+      ]
+    },
+    {
+      id: "fr-bdx-climate",
+      importance: "A",
+      question: "ボルドー地方の気候として、最も適切なものはどれですか？",
+      choices: ["海洋性気候", "大陸性気候", "地中海性気候", "高山性気候"],
+      answer: 0,
+      note: "ボルドーは大西洋の影響を受ける海洋性気候の産地です。",
+      notes: [
+        "正解です。ボルドーは大西洋の影響を受ける海洋性気候の産地です。",
+        "大陸性気候はブルゴーニュやシャンパーニュなどで意識します。",
+        "地中海性気候はプロヴァンスや南部ローヌなどで意識します。",
+        "高山性気候はジュラ・サヴォワなど山地性の産地で整理します。"
+      ]
+    },
+    {
+      id: "fr-bdx-right-bank-aoc",
+      importance: "A",
+      question: "次のA.O.C.のうち、ボルドー右岸に位置するものはどれですか？",
+      choices: ["Lalande-de-Pomerol", "Medoc", "Saint-Estephe", "Pessac-Leognan"],
+      answer: 0,
+      note: "Lalande-de-Pomerolはドルドーニュ川右岸側のA.O.C.です。",
+      notes: [
+        "正解です。Lalande-de-Pomerolはドルドーニュ川右岸側のA.O.C.です。",
+        "Medocはジロンド川左岸の地区です。",
+        "Saint-EstepheはMedoc地区の村名A.O.C.です。",
+        "Pessac-LeognanはGraves地区に位置するA.O.C.です。"
+      ]
+    },
+    {
+      id: "fr-bdx-sweet-only-aoc",
+      importance: "A",
+      question: "ボルドー地方で甘口白ワインが中心となるA.O.C.はどれですか？",
+      choices: ["Barsac", "Pomerol", "Cotes de Bourg", "Medoc"],
+      answer: 0,
+      note: "BarsacはSauternesと並び、Semillon主体の貴腐甘口白で整理します。",
+      notes: [
+        "正解です。BarsacはSauternesと並び、Semillon主体の貴腐甘口白で整理します。",
+        "Pomerolはボルドー右岸の赤ワイン産地として整理します。",
+        "Cotes de Bourgはボルドー右岸側の赤・白を含む産地で、甘口白中心ではありません。",
+        "Medocはボルドー左岸の赤ワイン産地として整理します。"
+      ]
+    },
+    {
+      id: "fr-bdx-red-only-aoc",
+      importance: "A",
+      question: "ボルドー地方で赤ワインの産地として整理するA.O.C.はどれですか？",
+      choices: ["Medoc", "Entre-Deux-Mers Haut-Benauge", "Bordeaux Haut-Benauge", "Sainte-Foy-Bordeaux"],
+      answer: 0,
+      note: "Medocはボルドー左岸の代表的な赤ワイン産地です。",
+      notes: [
+        "正解です。Medocはボルドー左岸の代表的な赤ワイン産地です。",
+        "Entre-Deux-Mers Haut-Benaugeはアントル・ドゥー・メール周辺の白ワイン系A.O.C.として整理します。",
+        "Bordeaux Haut-Benaugeは甘口白を含む白ワイン系A.O.C.として整理します。",
+        "Sainte-Foy-Bordeauxは赤だけでなく白や甘口白も含むA.O.C.です。"
+      ]
+    },
+    {
+      id: "fr-bdx-pessac-leognan-area",
+      importance: "A",
+      question: "Pessac-Leognanが位置するボルドーの地区はどれですか？",
+      choices: ["Graves", "Pomerol", "Medoc", "Entre-Deux-Mers"],
+      answer: 0,
+      note: "Pessac-LeognanはGraves地区の北部に位置するA.O.C.です。",
+      notes: [
+        "正解です。Pessac-LeognanはGraves地区の北部に位置するA.O.C.です。",
+        "Pomerolはドルドーニュ川右岸の赤ワイン産地です。",
+        "Medocはジロンド川左岸の地区で、PauillacやMargauxなどを含みます。",
+        "Entre-Deux-Mersはガロンヌ川とドルドーニュ川の間の地区です。"
+      ]
+    },
+    {
+      id: "fr-bdx-medoc-order",
+      importance: "B",
+      question: "ボルドー左岸のA.O.C.を、ガロンヌ川・ジロンド川の上流から下流へ並べたものはどれですか？",
+      choices: ["Sauternes、Cerons、Margaux、Saint-Estephe", "Margaux、Sauternes、Saint-Julien、Saint-Estephe", "Saint-Julien、Saint-Estephe、Margaux、Cerons", "Cerons、Pauillac、Barsac、Saint-Julien"],
+      answer: 0,
+      note: "上流側の甘口白産地から、下流側のMedoc村名A.O.C.へ向かう順で整理します。",
+      notes: [
+        "正解です。上流側の甘口白産地から、下流側のMedoc村名A.O.C.へ向かう順で整理します。",
+        "SauternesはMargauxより上流側に位置します。",
+        "CeronsはSaint-Estepheより上流側に位置します。",
+        "BarsacはPauillacより上流側に位置します。"
+      ]
+    }
+  ];
+
+  bordeauxReferenceQuestions.forEach((item) => {
+    addDetailed(item.id, "フランス / ボルドー", item.importance, item.question, item.choices, item.answer, item.note, item.notes);
+  });
+
+  const burgundyReferenceQuestions = [
+    {
+      id: "fr-bourgogne-charlemagne-color",
+      importance: "B",
+      question: "ブルゴーニュのGrand Cru「Charlemagne」で認められるワインの種類はどれですか？",
+      choices: ["白ワインのみ", "赤ワインのみ", "赤・白ワイン", "赤・白・ロゼワイン"],
+      answer: 0,
+      note: "Charlemagneは白ワインのみのGrand Cruとして整理します。",
+      notes: [
+        "正解です。Charlemagneは白ワインのみのGrand Cruとして整理します。",
+        "赤ワインのみではありません。Cote de Nuitsの多くのGrand Cruは赤のみで整理します。",
+        "Charlemagneは赤・白両方ではなく、白のみで問われやすいGrand Cruです。",
+        "ブルゴーニュGrand Cruの基本整理では、赤・白・ロゼすべてではありません。"
+      ]
+    },
+    {
+      id: "fr-bourgogne-romanee-saint-vivant-village",
+      importance: "A",
+      question: "Grand Cru「Romanee-Saint-Vivant」が属する村はどれですか？",
+      choices: ["Vosne-Romanee", "Puligny-Montrachet", "Chambolle-Musigny", "Gevrey-Chambertin"],
+      answer: 0,
+      note: "Romanee-Saint-VivantはVosne-Romanee村のGrand Cruです。",
+      notes: [
+        "正解です。Romanee-Saint-VivantはVosne-Romanee村のGrand Cruです。",
+        "Puligny-MontrachetはMontrachet系の白Grand Cruで重要な村です。",
+        "Chambolle-MusignyはMusignyやBonnes-Maresと結びつけて整理します。",
+        "Gevrey-ChambertinはChambertin系のGrand Cruで重要な村です。"
+      ]
+    },
+    {
+      id: "fr-bourgogne-bonnes-mares-villages",
+      importance: "A",
+      question: "Grand Cru「Bonnes-Mares」がまたがる村の組み合わせはどれですか？",
+      choices: ["Morey-Saint-Denis / Chambolle-Musigny", "Gevrey-Chambertin / Morey-Saint-Denis", "Chambolle-Musigny / Vougeot", "Puligny-Montrachet / Chassagne-Montrachet"],
+      answer: 0,
+      note: "Bonnes-MaresはMorey-Saint-Denis村とChambolle-Musigny村にまたがるGrand Cruです。",
+      notes: [
+        "正解です。Bonnes-MaresはMorey-Saint-Denis村とChambolle-Musigny村にまたがるGrand Cruです。",
+        "Gevrey-Chambertin / Morey-Saint-DenisはChambertin系やClos de la Rocheなどとの混同に注意します。",
+        "VougeotはClos de Vougeotで重要ですが、Bonnes-Maresの組み合わせではありません。",
+        "Puligny-Montrachet / Chassagne-MontrachetはMontrachet系Grand Cruで整理します。"
+      ]
+    },
+    {
+      id: "fr-bourgogne-meursault-grand-cru-count",
+      importance: "B",
+      question: "Meursault村に存在するGrand Cruの数はどれですか？",
+      choices: ["0個", "3個", "6個", "9個"],
+      answer: 0,
+      note: "Meursault村にはGrand Cruがなく、Premier Cruと村名ワインで整理します。",
+      notes: [
+        "正解です。Meursault村にはGrand Cruがなく、Premier Cruと村名ワインで整理します。",
+        "3個ではありません。Montrachet系Grand CruはPuligny-MontrachetやChassagne-Montrachet側で整理します。",
+        "6個ではありません。Meursaultは白ワインで重要ですがGrand Cruはありません。",
+        "9個ではありません。Gevrey-ChambertinのGrand Cru数などとの混同に注意します。"
+      ]
+    },
+    {
+      id: "fr-bourgogne-clos-saint-denis-color",
+      importance: "B",
+      question: "Grand Cru「Clos Saint-Denis」で認められるワインの種類はどれですか？",
+      choices: ["赤ワインのみ", "白ワインのみ", "赤・白ワイン", "赤・白・ロゼワイン"],
+      answer: 0,
+      note: "Clos Saint-DenisはCote de Nuitsの赤ワインGrand Cruとして整理します。",
+      notes: [
+        "正解です。Clos Saint-DenisはCote de Nuitsの赤ワインGrand Cruとして整理します。",
+        "白ワインのみではありません。白のみのGrand CruはMontrachet系やChablis Grand Cruなどで整理します。",
+        "赤・白両方ではなく、赤ワインのみで問われやすいGrand Cruです。",
+        "ブルゴーニュGrand Cruの基本整理では、赤・白・ロゼすべてではありません。"
+      ]
+    },
+    {
+      id: "fr-bourgogne-chablis-premier-cru",
+      importance: "B",
+      question: "次のうち、ChablisのPremier Cruとして整理する畑名はどれですか？",
+      choices: ["Cote de Lechet", "Les Suchots", "Ile des Vergelesses", "Clos des Marechaudes"],
+      answer: 0,
+      note: "Cote de LechetはChablisのPremier Cruとして整理します。",
+      notes: [
+        "正解です。Cote de LechetはChablisのPremier Cruとして整理します。",
+        "Les SuchotsはVosne-Romanee村のPremier Cruとして整理します。",
+        "Ile des VergelessesはPernand-VergelessesのPremier Cruとして整理します。",
+        "Clos des MarechaudesはAloxe-Corton周辺のPremier Cruとして整理します。"
+      ]
+    },
+    {
+      id: "fr-bourgogne-grand-cru-identification",
+      importance: "A",
+      question: "次のうち、ブルゴーニュのGrand Cruとして整理する畑名はどれですか？",
+      choices: ["Mazis-Chambertin", "Les Suchots", "Champ Canet", "Les Bressandes"],
+      answer: 0,
+      note: "Mazis-ChambertinはGevrey-Chambertin村のGrand Cruです。",
+      notes: [
+        "正解です。Mazis-ChambertinはGevrey-Chambertin村のGrand Cruです。",
+        "Les SuchotsはVosne-Romanee村のPremier Cruとして整理します。",
+        "Champ CanetはPuligny-Montrachet村のPremier Cruとして整理します。",
+        "Les BressandesはAloxe-Corton周辺のPremier Cruとして整理します。"
+      ]
+    },
+    {
+      id: "fr-bourgogne-montrachet-villages",
+      importance: "A",
+      question: "Grand Cru「Montrachet」がまたがる村の組み合わせはどれですか？",
+      choices: ["Puligny-Montrachet / Chassagne-Montrachet", "Meursault / Volnay", "Gevrey-Chambertin / Morey-Saint-Denis", "Vosne-Romanee / Vougeot"],
+      answer: 0,
+      note: "MontrachetはPuligny-Montrachet村とChassagne-Montrachet村にまたがる白ワインGrand Cruです。",
+      notes: [
+        "正解です。MontrachetはPuligny-Montrachet村とChassagne-Montrachet村にまたがる白ワインGrand Cruです。",
+        "Meursault / Volnayではありません。MeursaultにはGrand Cruがありません。",
+        "Gevrey-Chambertin / Morey-Saint-DenisはCote de Nuitsの赤系Grand Cruとの混同に注意します。",
+        "Vosne-Romanee / Vougeotではありません。Vosne-RomaneeはRomanee-Saint-Vivantなどで整理します。"
+      ]
+    }
+  ];
+
+  burgundyReferenceQuestions.forEach((item) => {
+    addDetailed(item.id, "フランス / ブルゴーニュ", item.importance, item.question, item.choices, item.answer, item.note, item.notes);
+  });
+
   facts.forEach(([id, category, importance, subject, answer, wrongs, note], index) => {
     const next = facts[(index + 1) % facts.length];
     const third = facts[(index + 2) % facts.length];
@@ -121,7 +358,7 @@
     if (customPair) {
       add(`${id}-pair`, category, importance, customPair.question, customPair.choices, 0, note);
     } else {
-      add(`${id}-pair`, category, importance, `${subject}を含む組み合わせで、正しいものはどれですか？`, wrongChoices(`${subject} - ${answer}`, [`${next[3]} - ${answer}`, `${third[3]} - ${wrongs[0]}`, `${fourth[3]} - ${wrongs[1] || wrongs[0]}`]), 0, note);
+      add(`${id}-pair`, category, importance, `${category}について、次の組み合わせで正しいものはどれですか？`, wrongChoices(`${subject} - ${answer}`, [`${next[3]} - ${answer}`, `${third[3]} - ${wrongs[0]}`, `${fourth[3]} - ${wrongs[1] || wrongs[0]}`]), 0, note);
     }
     const customWrong = customWrongQuestions[id];
     if (customWrong) {
@@ -129,7 +366,7 @@
     } else {
       add(`${id}-wrong`, category, importance === "A" ? "B" : importance, `${subject}周辺の知識で、誤っている組み合わせはどれですか？`, wrongChoices(`${subject} - ${next[4]}`, [`${subject} - ${answer}`, `${next[3]} - ${next[4]}`, `${third[3]} - ${third[4]}`]), 0, `${subject}は${answer}と結びつけます。`);
     }
-    add(`${id}-compare`, category, "B", `次の組み合わせで正しいものはどれですか？`, wrongChoices(`${subject} - ${answer}`, [`${next[3]} - ${answer}`, `${third[3]} - ${wrongs[0]}`, `${fourth[3]} - ${wrongs[1] || wrongs[0]}`]), 0, note);
+    add(`${id}-compare`, category, "B", `${category}について、次の組み合わせで正しいものはどれですか？`, wrongChoices(`${subject} - ${answer}`, [`${next[3]} - ${answer}`, `${third[3]} - ${wrongs[0]}`, `${fourth[3]} - ${wrongs[1] || wrongs[0]}`]), 0, note);
   });
 
   window.QUESTION_PACKS.push({

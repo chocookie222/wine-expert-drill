@@ -36,7 +36,7 @@
         q(`${base}-a`, category, `${fact.key}として適切なものは？`, choiceSet(fact.answer, fact.wrongs), 0, fact.note, fact.importance || "A");
       } else if (pattern === 1) {
         const wrongPairs = otherFacts.slice(0, 3).map((item, index) => `${item.key} - ${fact.wrongs[index % fact.wrongs.length]}`);
-        q(`${base}-pair`, category, `${fact.key}を含む組み合わせで、正しいものはどれですか？`, choiceSet(`${fact.key} - ${fact.answer}`, wrongPairs), 0, fact.note, fact.importance || "A");
+        q(`${base}-pair`, category, `${category.split(" / ")[1]}について、次の組み合わせで正しいものはどれですか？`, choiceSet(`${fact.key} - ${fact.answer}`, wrongPairs), 0, fact.note, fact.importance || "A");
       } else if (pattern === 2) {
         const wrongFact = otherFacts[0] || fact;
         const correctPairs = otherFacts.slice(1).map((item) => `${item.key} - ${item.answer}`);
